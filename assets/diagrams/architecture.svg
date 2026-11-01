@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740" role="img" aria-labelledby="title desc">
+  <title id="title">Proposed ESP32-S3 integration architecture for the JG-21264R</title>
+  <desc id="desc">Planned smartphone commands pass through an ESP32 command arbiter and an unresolved electrical interface to the original board and motors. A separate power lane shows motor and regulated logic supplies to be verified. This is not a wiring diagram.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#64748b"/></marker>
+    <marker id="pending" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97706"/></marker>
+  </defs>
+  <rect width="1280" height="740" rx="20" fill="#f8fafc"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="48" y="58" fill="#0f172a" font-size="30" font-weight="700">JG-21264R × ESP32-S3</text>
+    <text x="48" y="90" fill="#475569" font-size="17">Proposed system architecture · Hardware investigation · No interface wired or verified</text>
+    <rect x="48" y="120" width="1184" height="44" rx="8" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="66" y="148" fill="#9a3412" font-size="16">Design boundary: verify voltage levels, driver behavior, power rails, and U3 input ownership before connection.</text>
+
+    <text x="48" y="204" fill="#475569" font-size="14" font-weight="700" letter-spacing="2">PLANNED CONTROL PATH</text>
+    <rect x="48" y="230" width="182" height="145" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="68" y="264" fill="#0f172a" font-size="19" font-weight="700">Smartphone</text>
+    <text x="68" y="296" fill="#475569" font-size="15">Local browser</text>
+    <text x="68" y="322" fill="#475569" font-size="15">Direction · speed</text>
+    <text x="68" y="348" fill="#475569" font-size="15">Deliberate stop</text>
+
+    <rect x="266" y="230" width="270" height="145" rx="12" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="286" y="264" fill="#1e3a8a" font-size="19" font-weight="700">ESP32-S3 · N16R8</text>
+    <text x="286" y="296" fill="#334155" font-size="15">Wi-Fi transport + command arbiter</text>
+    <text x="286" y="322" fill="#334155" font-size="15">Arming · freshness · timeout</text>
+    <text x="286" y="348" fill="#334155" font-size="15">Motion logic + board adapter</text>
+
+    <rect x="572" y="230" width="214" height="145" rx="12" fill="#fffbeb" stroke="#fbbf24" stroke-dasharray="6 4"/>
+    <text x="592" y="264" fill="#92400e" font-size="19" font-weight="700">Interface · TBD</text>
+    <text x="592" y="296" fill="#78350f" font-size="15">Logic-level compatibility</text>
+    <text x="592" y="322" fill="#78350f" font-size="15">U3 contention resolved</text>
+    <text x="592" y="348" fill="#78350f" font-size="15">Biasing / isolation if needed</text>
+
+    <rect x="822" y="230" width="220" height="145" rx="12" fill="#f0fdfa" stroke="#5eead4"/>
+    <text x="842" y="264" fill="#134e4a" font-size="19" font-weight="700">Original RC board</text>
+    <text x="842" y="296" fill="#334155" font-size="15">JG-21264R · U1 / U2</text>
+    <text x="842" y="322" fill="#334155" font-size="15">Motor-stage candidates</text>
+    <text x="842" y="348" fill="#334155" font-size="15">Pin functions unverified</text>
+
+    <rect x="1078" y="230" width="154" height="145" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="1096" y="264" fill="#0f172a" font-size="19" font-weight="700">Motors</text>
+    <text x="1096" y="296" fill="#475569" font-size="15">Four sockets</text>
+    <text x="1096" y="322" fill="#475569" font-size="15">Output routing</text>
+    <text x="1096" y="348" fill="#475569" font-size="15">to be mapped</text>
+
+    <path d="M230 302H260" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M536 302H566" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
+    <path d="M786 302H816" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
+    <path d="M1042 302H1072" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
+
+    <text x="48" y="435" fill="#475569" font-size="14" font-weight="700" letter-spacing="2">POWER AND SIGNAL REFERENCE · UNRESOLVED</text>
+    <rect x="48" y="458" width="1184" height="160" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect x="68" y="478" width="245" height="116" rx="8" fill="#f1f5f9"/>
+    <text x="86" y="509" fill="#0f172a" font-size="17" font-weight="700">Suitable protected supply</text>
+    <text x="86" y="537" fill="#475569" font-size="14">Voltage / current to verify</text>
+    <text x="86" y="563" fill="#475569" font-size="14">3.7 / 7.4 V printing is not proof</text>
+    <path d="M313 507H366" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
+    <path d="M313 565H366" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
+    <text x="386" y="512" fill="#334155" font-size="16">Motor power → original board; B+ circuit routing to verify</text>
+    <text x="386" y="570" fill="#334155" font-size="16">Suitable regulation / dev-board power input → ESP32 logic</text>
+    <text x="891" y="597" fill="#0f766e" font-size="13">Verify shared signal reference</text>
+
+    <path d="M48 652H1232" stroke="#cbd5e1"/>
+    <text x="48" y="682" fill="#475569" font-size="15">All blocks are planned. Dashed links require electrical verification. No GPIO assignments or wire colors are specified.</text>
+    <text x="48" y="709" fill="#64748b" font-size="14">Architecture source: docs/architecture.md · Evidence source: hardware/data/pin-map.json</text>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "source": "Owner-supplied photographs from this conversation",
+  "recorded_date": "2026-11-01",
+  "files": [
+    {
+      "file": "board-component-side.jpg",
+      "original_filename": "Scanned_20261026-1531.jpg",
+      "sha256": "5938165107d780d2a93a403c5bca85be81236718a45cf6ef93ad9e9ce29c0e02",
+      "bytes": 836107,
+      "processing": "None; original bytes preserved."
+    },
+    {
+      "file": "board-connector-side.jpg",
+      "original_filename": "backboard.jpg",
+      "sha256": "d2455b2a775d8b89005d981bc4b4157dda4dc6003be0d68a11fb0b80154e6652",
+      "bytes": 589980,
+      "processing": "None; original bytes preserved."
+    }
+  ]
+}
