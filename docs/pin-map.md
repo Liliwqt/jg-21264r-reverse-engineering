@@ -10,7 +10,7 @@ U1 is upper left, U2 upper right, and U3 below U1. Numbering follows the owner's
 
 ```text
                   U1                                             U2
- 16⬜ 15⏚  14⏚  13⬜ 12⬜ 11⬜ 10⬜ 09⬜        16⬜ 15⏚  14⏚  13⬜ 12⬜ 11⬜ 10⬜ 09⬜
+ 16⬜ 15⏚  14⏚  13⬜ 12⬜ 11⏚  10⏚  09⬜        16⬜ 15⏚  14⏚  13⬜ 12⬜ 11⏚  10⏚  09⬜
  ┌───────────────────────────────────────┐      ┌───────────────────────────────────────┐
  │                 1818BM                │      │                 1818BM                │
  └───────────────────────────────────────┘      └───────────────────────────────────────┘
@@ -34,7 +34,7 @@ U1 is upper left, U2 upper right, and U3 below U1. Numbering follows the owner's
 | Symbol | Group | Recorded IC pins | External point | Interpretation |
 | --- | --- | --- | --- | --- |
 | 🟥 | A | U1-1, U1-5, U2-1, U2-5, U3-2, U3-5 | — | Unidentified shared group |
-| 🟦 | B | U1-4, U1-8, U2-4, U2-8 | — | Unidentified shared group |
+| 🟦 | B | U1-4, U1-8, U2-4, U2-8 | battery positive | Reported positive-terminal connection; voltage and direct copper unverified |
 | 🟩 | C | U1-2, U3-14 | — | Unidentified connection |
 | 🟨 | D | U1-3, U3-13 | — | Unidentified connection |
 | 🟪 | E | U1-7, U3-11 | — | Unidentified connection |
@@ -44,7 +44,7 @@ U1 is upper left, U2 upper right, and U3 below U1. Numbering follows the owner's
 | 🔷 | I | U2-6, U3-6 | — | Unidentified connection |
 | 🔶 | J | U2-7, U3-7 | — | Unidentified connection |
 | 📡 | ANT | U3-16 | ANT | Reported antenna connection |
-| ⏚ | NEG | U1-14, U1-15, U2-14, U2-15, U3-1, U3-15 | battery negative | Reported negative-terminal beeps; ground/direct copper unverified |
+| ⏚ | NEG | U1-10, U1-11, U1-14, U1-15, U2-10, U2-11, U2-14, U2-15, U3-1, U3-15 | battery negative | Reported negative-terminal beeps; ground/direct copper unverified |
 
 ## ASCII fallback
 
@@ -52,7 +52,7 @@ Each pin is followed by its group ID; `.` means unrecorded. The file [pin-map.as
 
 ```text
                      U1                                                     U2
- 16.   15NEG 14NEG 13.   12.   11.   10.   09.          16.   15NEG 14NEG 13.   12.   11.   10.   09.
+ 16.   15NEG 14NEG 13.   12.   11NEG 10NEG 09.          16.   15NEG 14NEG 13.   12.   11NEG 10NEG 09.
  +-----------------------------------------------+      +-----------------------------------------------+
  |                     1818BM                    |      |                     1818BM                    |
  +-----------------------------------------------+      +-----------------------------------------------+

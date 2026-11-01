@@ -19,6 +19,8 @@ Recorded into this repository on **2026-11-01** from the owner's conversation. I
 | M11 | U2-7 ↔ U3-7 | J |
 | M12 | ANT ↔ U3-16 | ANT |
 | M13 | U3-15, U3-1, U1-15, U1-14, U2-15, U2-14 beep to the negative terminal | NEG; duration/resistance not recorded |
+| M14 | U1-10, U1-11, U2-10, U2-11 are also connected to the negative terminal | NEG; owner report, resistance/duration not supplied |
+| M15 | The blue mapped group (U1-4, U1-8, U2-4, U2-8) connects to battery positive | B; owner report, voltage/resistance not supplied |
 
 The owner also reported that some pin pairs appeared to beep while a capacitor charged. No specific pairs were identified. Preserve all current groups as **reported**, and do not promote any to verified direct copper until the stable-resistance check is recorded.
 

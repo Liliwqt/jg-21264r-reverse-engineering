@@ -10,7 +10,7 @@
   ],
   "groups": [
     {"id": "A", "symbol": "🟥", "color": "#ef4444", "members": ["U1-1", "U1-5", "U2-1", "U2-5", "U3-2", "U3-5"], "external": [], "function": "Unidentified shared group", "records": ["M01"]},
-    {"id": "B", "symbol": "🟦", "color": "#3b82f6", "members": ["U1-4", "U1-8", "U2-4", "U2-8"], "external": [], "function": "Unidentified shared group", "records": ["M05"]},
+    {"id": "B", "symbol": "🟦", "color": "#3b82f6", "members": ["U1-4", "U1-8", "U2-4", "U2-8"], "external": ["battery positive"], "function": "Reported positive-terminal connection; voltage and direct copper unverified", "records": ["M05", "M15"]},
     {"id": "C", "symbol": "🟩", "color": "#22c55e", "members": ["U1-2", "U3-14"], "external": [], "function": "Unidentified connection", "records": ["M03"]},
     {"id": "D", "symbol": "🟨", "color": "#eab308", "members": ["U1-3", "U3-13"], "external": [], "function": "Unidentified connection", "records": ["M04"]},
     {"id": "E", "symbol": "🟪", "color": "#a855f7", "members": ["U1-7", "U3-11"], "external": [], "function": "Unidentified connection", "records": ["M07"]},
@@ -20,6 +20,6 @@
     {"id": "I", "symbol": "🔷", "color": "#06b6d4", "members": ["U2-6", "U3-6"], "external": [], "function": "Unidentified connection", "records": ["M10"]},
     {"id": "J", "symbol": "🔶", "color": "#fbbf24", "members": ["U2-7", "U3-7"], "external": [], "function": "Unidentified connection", "records": ["M11"]},
     {"id": "ANT", "symbol": "📡", "color": "#f472b6", "members": ["U3-16"], "external": ["ANT"], "function": "Reported antenna connection", "records": ["M12"]},
-    {"id": "NEG", "symbol": "⏚", "color": "#2dd4bf", "members": ["U1-14", "U1-15", "U2-14", "U2-15", "U3-1", "U3-15"], "external": ["battery negative"], "function": "Reported negative-terminal beeps; ground/direct copper unverified", "records": ["M13"]}
+    {"id": "NEG", "symbol": "⏚", "color": "#2dd4bf", "members": ["U1-10", "U1-11", "U1-14", "U1-15", "U2-10", "U2-11", "U2-14", "U2-15", "U3-1", "U3-15"], "external": ["battery negative"], "function": "Reported negative-terminal beeps; ground/direct copper unverified", "records": ["M13", "M14"]}
   ]
 }

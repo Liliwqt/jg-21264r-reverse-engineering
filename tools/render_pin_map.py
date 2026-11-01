@@ -6,6 +6,7 @@ import html
 import json
 from pathlib import Path
 import sys
+import textwrap
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "hardware/data/pin-map.json"
@@ -136,14 +137,18 @@ def svg(data, membership):
                 out.append(f'<text x="{px+21}" y="{ny}" text-anchor="middle" fill="#e2e8f0" font-size="15">{pin}</text>')
     out.append('<rect x="690" y="435" width="540" height="432" rx="12" fill="#111c2e" stroke="#334155"/>')
     out.append('<text x="714" y="469" fill="#f8fafc" font-size="19" font-weight="700">Reported connection groups</text>')
-    for index, group in enumerate(data["groups"]):
-        y = 498 + index * 28
+    legend_y = 498
+    for group in data["groups"]:
+        y = legend_y
         out.append(f'<rect x="714" y="{y-12}" width="12" height="12" rx="3" fill="{group["color"]}"/>')
         out.append(f'<text x="738" y="{y}" fill="#f8fafc" font-size="13" font-weight="700">{group["id"]}</text>')
         pins = ", ".join(group["members"])
         if group["external"]:
             pins += " → " + ", ".join(group["external"])
-        out.append(f'<text x="783" y="{y}" fill="#cbd5e1" font-size="12">{html.escape(pins)}</text>')
+        legend_lines = textwrap.wrap(pins, width=62, break_long_words=False, break_on_hyphens=False)
+        for line_index, line in enumerate(legend_lines):
+            out.append(f'<text x="783" y="{y + line_index * 16}" fill="#cbd5e1" font-size="12">{html.escape(line)}</text>')
+        legend_y += max(28, len(legend_lines) * 16 + 10)
     out.extend([
         '<text x="70" y="820" fill="#cbd5e1" font-size="15">Same group label / color = reported continuity.</text>',
         '<text x="70" y="846" fill="#94a3b8" font-size="15">Gray dot = no connection recorded.</text>',

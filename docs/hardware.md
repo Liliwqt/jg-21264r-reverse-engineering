@@ -39,4 +39,6 @@ Before a pin is used electrically, correlate the physical lead, package indicato
 
 The board includes printed 3.7 V and 7.4 V configuration options. The earlier project context described a 3.7 V toy battery, but its actual pack, condition, and this board's fitted supply configuration have not been electrically established here. Battery polarity identification alone does not authorize applying an arbitrary voltage.
 
-U1-14/15, U2-14/15, and U3-1/15 were reported to beep to battery negative. They form the **NEG** candidate group in the map. Beep duration and resistance values were not recorded. Ground role, low resistance, and direct copper routing remain to be confirmed.
+U1-10/11/14/15, U2-10/11/14/15, and U3-1/15 were reported to connect to battery negative. They form the **NEG** candidate group in the map. The original observation was a beep; duration and resistance values were not recorded. Ground role, low resistance, and direct copper routing remain to be confirmed.
+
+The blue **Group B** (U1-4/8 and U2-4/8) was subsequently reported to connect to battery positive. The terminal association is recorded; it does not independently establish the operating voltage, a verified IC supply pinout, or the full B+ routing.

@@ -24,11 +24,11 @@
 <rect x="330" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
 <text x="351" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
 <text x="351" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">12</text>
-<rect x="392" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="413" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="392" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
+<text x="413" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="413" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">11</text>
-<rect x="454" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="475" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="454" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
+<text x="475" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="475" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">10</text>
 <rect x="516" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
 <text x="537" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
@@ -76,11 +76,11 @@
 <rect x="970" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
 <text x="991" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
 <text x="991" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">12</text>
-<rect x="1032" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="1053" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="1032" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
+<text x="1053" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="1053" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">11</text>
-<rect x="1094" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="1115" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="1094" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
+<text x="1115" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="1115" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">10</text>
 <rect x="1156" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
 <text x="1177" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
@@ -168,7 +168,7 @@
 <text x="783" y="498" fill="#cbd5e1" font-size="12">U1-1, U1-5, U2-1, U2-5, U3-2, U3-5</text>
 <rect x="714" y="514" width="12" height="12" rx="3" fill="#3b82f6"/>
 <text x="738" y="526" fill="#f8fafc" font-size="13" font-weight="700">B</text>
-<text x="783" y="526" fill="#cbd5e1" font-size="12">U1-4, U1-8, U2-4, U2-8</text>
+<text x="783" y="526" fill="#cbd5e1" font-size="12">U1-4, U1-8, U2-4, U2-8 → battery positive</text>
 <rect x="714" y="542" width="12" height="12" rx="3" fill="#22c55e"/>
 <text x="738" y="554" fill="#f8fafc" font-size="13" font-weight="700">C</text>
 <text x="783" y="554" fill="#cbd5e1" font-size="12">U1-2, U3-14</text>
@@ -198,7 +198,8 @@
 <text x="783" y="778" fill="#cbd5e1" font-size="12">U3-16 → ANT</text>
 <rect x="714" y="794" width="12" height="12" rx="3" fill="#2dd4bf"/>
 <text x="738" y="806" fill="#f8fafc" font-size="13" font-weight="700">NEG</text>
-<text x="783" y="806" fill="#cbd5e1" font-size="12">U1-14, U1-15, U2-14, U2-15, U3-1, U3-15 → battery negative</text>
+<text x="783" y="806" fill="#cbd5e1" font-size="12">U1-10, U1-11, U1-14, U1-15, U2-10, U2-11, U2-14, U2-15, U3-1,</text>
+<text x="783" y="822" fill="#cbd5e1" font-size="12">U3-15 → battery negative</text>
 <text x="70" y="820" fill="#cbd5e1" font-size="15">Same group label / color = reported continuity.</text>
 <text x="70" y="846" fill="#94a3b8" font-size="15">Gray dot = no connection recorded.</text>
 <path d="M48 895H1232" stroke="#334155"/>

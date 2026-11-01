@@ -14,6 +14,7 @@ flowchart TB
     U2["U2 · 1818BM marking\nMotor-driver candidate"]
     U3["U3 · exact marking unresolved\nRadio/controller candidate"]
     ANT["ANT connection"]
+    POS["Battery positive\nOwner-identified terminal"]
     NEG["Battery negative\nOwner-identified terminal"]
     MOT["Four motor sockets\nPin mapping incomplete"]
     U1 ---|"C, D, H, E · reported continuity"| U3
@@ -21,6 +22,8 @@ flowchart TB
     U1 ---|"A and B · shared reported groups"| U2
     U3 ---|"A · shared reported group"| U1
     ANT ---|"Reported to U3-16"| U3
+    POS ---|"B · reported continuity"| U1
+    POS ---|"B · reported continuity"| U2
     NEG ---|"NEG · reported beeps"| U1
     NEG ---|"NEG · reported beeps"| U2
     NEG ---|"NEG · reported beeps"| U3
