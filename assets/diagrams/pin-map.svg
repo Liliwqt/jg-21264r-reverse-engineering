@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="980" viewBox="0 0 1280 980" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1080" viewBox="0 0 1280 1080" role="img" aria-labelledby="title desc">
 <title id="title">JG-21264R owner-reported continuity map</title>
-<desc id="desc">U1 upper left, U2 upper right, U3 lower left. Colored pins share a reported group. Group letters accompany colors. Physical pin numbering and electrical functions are unverified.</desc>
-<rect width="1280" height="980" rx="20" fill="#0b1220"/>
+<desc id="desc">U1 upper left, U2 upper right, removed U3 footprint lower left. Group IDs mark reported continuity. Numbered A/B labels mark separate motor-output terminals; matching motor colors identify a channel, not a shared net. Physical pin numbering and electrical functions are unverified.</desc>
+<rect width="1280" height="1080" rx="20" fill="#0b1220"/>
 <g font-family="Arial, Helvetica, sans-serif">
 <text x="48" y="57" fill="#f8fafc" font-size="30" font-weight="700">JG-21264R · Current pin map</text>
 <text x="48" y="88" fill="#94a3b8" font-size="16">Owner-reported continuity · Working pin numbering · Electrical functions unverified</text>
@@ -9,8 +9,8 @@
 <rect x="70" y="240" width="500" height="120" rx="12" fill="#172033" stroke="#475569" stroke-width="2"/>
 <text x="320" y="297" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">U1</text>
 <text x="320" y="327" text-anchor="middle" fill="#cbd5e1" font-size="14">1818BM · driver candidate</text>
-<rect x="82" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="103" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="82" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#84cc16" stroke-width="2"/>
+<text x="103" y="223" text-anchor="middle" fill="#84cc16" font-size="13" font-weight="700">1A</text>
 <text x="103" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">16</text>
 <rect x="144" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="165" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
@@ -18,11 +18,11 @@
 <rect x="206" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="227" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="227" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">14</text>
-<rect x="268" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="289" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="268" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#84cc16" stroke-width="2"/>
+<text x="289" y="223" text-anchor="middle" fill="#84cc16" font-size="13" font-weight="700">1B</text>
 <text x="289" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">13</text>
-<rect x="330" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="351" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="330" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#facc15" stroke-width="2"/>
+<text x="351" y="223" text-anchor="middle" fill="#facc15" font-size="13" font-weight="700">2A</text>
 <text x="351" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">12</text>
 <rect x="392" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="413" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
@@ -30,8 +30,8 @@
 <rect x="454" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="475" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="475" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">10</text>
-<rect x="516" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="537" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="516" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#facc15" stroke-width="2"/>
+<text x="537" y="223" text-anchor="middle" fill="#facc15" font-size="13" font-weight="700">2B</text>
 <text x="537" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">9</text>
 <rect x="82" y="368" width="42" height="30" rx="5" fill="#0b1220" stroke="#ef4444" stroke-width="2"/>
 <text x="103" y="389" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">A</text>
@@ -61,8 +61,8 @@
 <rect x="710" y="240" width="500" height="120" rx="12" fill="#172033" stroke="#475569" stroke-width="2"/>
 <text x="960" y="297" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">U2</text>
 <text x="960" y="327" text-anchor="middle" fill="#cbd5e1" font-size="14">1818BM · driver candidate</text>
-<rect x="722" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="743" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="722" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#fb923c" stroke-width="2"/>
+<text x="743" y="223" text-anchor="middle" fill="#fb923c" font-size="13" font-weight="700">3A</text>
 <text x="743" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">16</text>
 <rect x="784" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="805" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
@@ -70,11 +70,11 @@
 <rect x="846" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="867" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="867" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">14</text>
-<rect x="908" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="929" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="908" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#fb923c" stroke-width="2"/>
+<text x="929" y="223" text-anchor="middle" fill="#fb923c" font-size="13" font-weight="700">3B</text>
 <text x="929" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">13</text>
-<rect x="970" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="991" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="970" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#e879f9" stroke-width="2"/>
+<text x="991" y="223" text-anchor="middle" fill="#e879f9" font-size="13" font-weight="700">4A</text>
 <text x="991" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">12</text>
 <rect x="1032" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="1053" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
@@ -82,8 +82,8 @@
 <rect x="1094" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#2dd4bf" stroke-width="2"/>
 <text x="1115" y="223" text-anchor="middle" fill="#2dd4bf" font-size="13" font-weight="700">NEG</text>
 <text x="1115" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">10</text>
-<rect x="1156" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="1177" y="223" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="1156" y="202" width="42" height="30" rx="5" fill="#0b1220" stroke="#e879f9" stroke-width="2"/>
+<text x="1177" y="223" text-anchor="middle" fill="#e879f9" font-size="13" font-weight="700">4B</text>
 <text x="1177" y="193" text-anchor="middle" fill="#e2e8f0" font-size="15">9</text>
 <rect x="722" y="368" width="42" height="30" rx="5" fill="#0b1220" stroke="#ef4444" stroke-width="2"/>
 <text x="743" y="389" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">A</text>
@@ -110,9 +110,9 @@
 <text x="1177" y="389" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">B</text>
 <text x="1177" y="418" text-anchor="middle" fill="#e2e8f0" font-size="15">8</text>
 <text x="70" y="475" fill="#f8fafc" font-size="22" font-weight="700">U3 · below U1</text>
-<rect x="70" y="580" width="500" height="120" rx="12" fill="#172033" stroke="#475569" stroke-width="2"/>
+<rect x="70" y="580" width="500" height="120" rx="12" fill="#172033" stroke="#475569" stroke-width="2" stroke-dasharray="8 5"/>
 <text x="320" y="637" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="700">U3</text>
-<text x="320" y="667" text-anchor="middle" fill="#cbd5e1" font-size="14">Controller candidate · marking unresolved</text>
+<text x="320" y="667" text-anchor="middle" fill="#cbd5e1" font-size="14">Removed controller · PCB pad reference</text>
 <rect x="82" y="542" width="42" height="30" rx="5" fill="#0b1220" stroke="#f472b6" stroke-width="2"/>
 <text x="103" y="563" text-anchor="middle" fill="#f472b6" font-size="13" font-weight="700">ANT</text>
 <text x="103" y="533" text-anchor="middle" fill="#e2e8f0" font-size="15">16</text>
@@ -143,11 +143,11 @@
 <rect x="144" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#ef4444" stroke-width="2"/>
 <text x="165" y="729" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">A</text>
 <text x="165" y="758" text-anchor="middle" fill="#e2e8f0" font-size="15">2</text>
-<rect x="206" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="227" y="729" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="206" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#67e8f9" stroke-width="2"/>
+<text x="227" y="729" text-anchor="middle" fill="#67e8f9" font-size="13" font-weight="700">X1A</text>
 <text x="227" y="758" text-anchor="middle" fill="#e2e8f0" font-size="15">3</text>
-<rect x="268" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#475569" stroke-width="2"/>
-<text x="289" y="729" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">·</text>
+<rect x="268" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#67e8f9" stroke-width="2"/>
+<text x="289" y="729" text-anchor="middle" fill="#67e8f9" font-size="13" font-weight="700">X1B</text>
 <text x="289" y="758" text-anchor="middle" fill="#e2e8f0" font-size="15">4</text>
 <rect x="330" y="708" width="42" height="30" rx="5" fill="#0b1220" stroke="#ef4444" stroke-width="2"/>
 <text x="351" y="729" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">A</text>
@@ -200,9 +200,22 @@
 <text x="738" y="806" fill="#f8fafc" font-size="13" font-weight="700">NEG</text>
 <text x="783" y="806" fill="#cbd5e1" font-size="12">U1-10, U1-11, U1-14, U1-15, U2-10, U2-11, U2-14, U2-15, U3-1,</text>
 <text x="783" y="822" fill="#cbd5e1" font-size="12">U3-15 → battery negative</text>
-<text x="70" y="820" fill="#cbd5e1" font-size="15">Same group label / color = reported continuity.</text>
-<text x="70" y="846" fill="#94a3b8" font-size="15">Gray dot = no connection recorded.</text>
-<path d="M48 895H1232" stroke="#334155"/>
-<text x="48" y="926" fill="#fbbf24" font-size="15">NEG records a reported beep to battery negative. Transient beeps do not establish direct copper.</text>
-<text x="48" y="952" fill="#94a3b8" font-size="14">Source: hardware/data/pin-map.json · Photo arrangement preserved · No GPIO or supply assignments implied</text>
+<text x="70" y="800" fill="#f8fafc" font-size="18" font-weight="700">Reported motor pairs · separate A/B terminals</text>
+<rect x="70" y="820" width="12" height="12" rx="6" fill="#84cc16"/>
+<text x="96" y="832" fill="#e2e8f0" font-size="15">M1 · U1-16 / U1-13 · terminal A / B</text>
+<rect x="70" y="846" width="12" height="12" rx="6" fill="#facc15"/>
+<text x="96" y="858" fill="#e2e8f0" font-size="15">M2 · U1-12 / U1-9 · terminal A / B</text>
+<rect x="70" y="872" width="12" height="12" rx="6" fill="#fb923c"/>
+<text x="96" y="884" fill="#e2e8f0" font-size="15">M3 · U2-16 / U2-13 · terminal A / B</text>
+<rect x="70" y="898" width="12" height="12" rx="6" fill="#e879f9"/>
+<text x="96" y="910" fill="#e2e8f0" font-size="15">M4 · U2-12 / U2-9 · terminal A / B</text>
+<rect x="690" y="880" width="540" height="82" rx="10" fill="#111c2e" stroke="#334155"/>
+<text x="714" y="906" fill="#67e8f9" font-size="16" font-weight="700">X1 · 16.000 MHz · non-polarized crystal</text>
+<text x="714" y="930" fill="#cbd5e1" font-size="12">nearest the X1 PCB marking → U3-3; other lead → U3-4</text>
+<text x="714" y="950" fill="#94a3b8" font-size="12">X1A / X1B label separate leads, not positive / negative.</text>
+<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Motor numbers do not specify socket order.</text>
+<path d="M48 975H1232" stroke="#334155"/>
+<text x="48" y="1003" fill="#cbd5e1" font-size="14">Original-board group references retained. U3 is removed; its numbers identify footprint pads. Paired component terminals are separate.</text>
+<text x="48" y="1029" fill="#fbbf24" font-size="14">Rail readings are owner-reported. Package numbering and driver pin functions remain unverified.</text>
+<text x="48" y="1055" fill="#94a3b8" font-size="14">Source: hardware/data/pin-map.json · Photo arrangement preserved · No ESP32 GPIO assignments implied</text>
 </g></svg>

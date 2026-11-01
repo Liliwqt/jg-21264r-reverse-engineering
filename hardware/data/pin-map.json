@@ -3,10 +3,29 @@
   "recorded_date": "2026-11-01",
   "evidence": "Owner-reported continuity; not independently measured. Temporary-beep pairs were not individually identified.",
   "numbering": "Owner working convention; physical pin-1 orientation not independently verified. Upper edge 16..9; lower edge 1..8.",
+  "board_state": {
+    "u3_removed": true,
+    "reported_date": "2026-11-02",
+    "evidence": "Owner reports complete removal and a clear pad inspection; no post-removal photo inspected by the agent.",
+    "map_scope": "Connection groups and chip numbering preserve original board observations. U3 references now identify footprint pads, not an installed chip.",
+    "post_removal_rail": "Owner confirms approximately 3.3 V at U1-1 relative to B-.",
+    "esp32_connected": null,
+    "esp32_connection_status": "Three-wire unpowered assembly instructed; completion has not been reported.",
+    "first_pair_passive_interface": "Owner reports two 1 kOhm series resistors and two 10 kOhm pulldowns at U3 pads 14/13 assembled and expected 10/11/20 kOhm checks matched; see docs/bench-record.md."
+  },
   "chips": [
     {"id": "U1", "label": "1818BM · driver candidate", "position": "upper left", "pins": 16},
     {"id": "U2", "label": "1818BM · driver candidate", "position": "upper right", "pins": 16},
     {"id": "U3", "label": "Controller candidate · marking unresolved", "position": "below U1", "pins": 16}
+  ],
+  "motors": [
+    {"id": "M1", "chip": "U1", "pins": [16, 13], "symbol": "🟢", "color": "#84cc16", "record": "M16"},
+    {"id": "M2", "chip": "U1", "pins": [12, 9], "symbol": "🟡", "color": "#facc15", "record": "M17"},
+    {"id": "M3", "chip": "U2", "pins": [16, 13], "symbol": "🟠", "color": "#fb923c", "record": "M18"},
+    {"id": "M4", "chip": "U2", "pins": [12, 9], "symbol": "🟣", "color": "#e879f9", "record": "M19"}
+  ],
+  "crystals": [
+    {"id": "X1", "marking": "16.000", "frequency_hz": 16000000, "symbol": "💎", "color": "#67e8f9", "connections": [{"chip": "U3", "pin": 3, "terminal": "A", "lead_reference": "nearest the X1 PCB marking"}, {"chip": "U3", "pin": 4, "terminal": "B", "lead_reference": "other lead"}], "records": ["M20", "M21"], "polarity": "Non-polarized two-lead quartz crystal; A/B are physical reference labels, not polarity."}
   ],
   "groups": [
     {"id": "A", "symbol": "🟥", "color": "#ef4444", "members": ["U1-1", "U1-5", "U2-1", "U2-5", "U3-2", "U3-5"], "external": [], "function": "Unidentified shared group", "records": ["M01"]},

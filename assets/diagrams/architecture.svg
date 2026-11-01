@@ -8,9 +8,9 @@
   <rect width="1280" height="740" rx="20" fill="#f8fafc"/>
   <g font-family="Arial, Helvetica, sans-serif">
     <text x="48" y="58" fill="#0f172a" font-size="30" font-weight="700">JG-21264R × ESP32-S3</text>
-    <text x="48" y="90" fill="#475569" font-size="17">Proposed system architecture · Hardware investigation · No interface wired or verified</text>
+    <text x="48" y="90" fill="#475569" font-size="17">Proposed system architecture · Passive interface checked · ESP32 wiring pending</text>
     <rect x="48" y="120" width="1184" height="44" rx="8" fill="#fff7ed" stroke="#fed7aa"/>
-    <text x="66" y="148" fill="#9a3412" font-size="16">Design boundary: verify voltage levels, driver behavior, power rails, and U3 input ownership before connection.</text>
+    <text x="66" y="148" fill="#9a3412" font-size="16">Design boundary: verify driver levels, power sequencing, and behavior before energizing the interconnected setup.</text>
 
     <text x="48" y="204" fill="#475569" font-size="14" font-weight="700" letter-spacing="2">PLANNED CONTROL PATH</text>
     <rect x="48" y="230" width="182" height="145" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
@@ -28,8 +28,8 @@
     <rect x="572" y="230" width="214" height="145" rx="12" fill="#fffbeb" stroke="#fbbf24" stroke-dasharray="6 4"/>
     <text x="592" y="264" fill="#92400e" font-size="19" font-weight="700">Interface · TBD</text>
     <text x="592" y="296" fill="#78350f" font-size="15">Logic-level compatibility</text>
-    <text x="592" y="322" fill="#78350f" font-size="15">U3 contention resolved</text>
-    <text x="592" y="348" fill="#78350f" font-size="15">Biasing / isolation if needed</text>
+    <text x="592" y="322" fill="#78350f" font-size="15">U3 removed (owner report)</text>
+    <text x="592" y="348" fill="#78350f" font-size="15">Startup biasing to verify</text>
 
     <rect x="822" y="230" width="220" height="145" rx="12" fill="#f0fdfa" stroke="#5eead4"/>
     <text x="842" y="264" fill="#134e4a" font-size="19" font-weight="700">Original RC board</text>
@@ -40,8 +40,8 @@
     <rect x="1078" y="230" width="154" height="145" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
     <text x="1096" y="264" fill="#0f172a" font-size="19" font-weight="700">Motors</text>
     <text x="1096" y="296" fill="#475569" font-size="15">Four sockets</text>
-    <text x="1096" y="322" fill="#475569" font-size="15">Output routing</text>
-    <text x="1096" y="348" fill="#475569" font-size="15">to be mapped</text>
+    <text x="1096" y="322" fill="#475569" font-size="15">Output pairs</text>
+    <text x="1096" y="348" fill="#475569" font-size="15">owner-reported</text>
 
     <path d="M230 302H260" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
     <path d="M536 302H566" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#pending)"/>
@@ -61,7 +61,7 @@
     <text x="891" y="597" fill="#0f766e" font-size="13">Verify shared signal reference</text>
 
     <path d="M48 652H1232" stroke="#cbd5e1"/>
-    <text x="48" y="682" fill="#475569" font-size="15">All blocks are planned. Dashed links require electrical verification. No GPIO assignments or wire colors are specified.</text>
+    <text x="48" y="682" fill="#475569" font-size="15">Full control path is planned. Dashed links require verification. GPIO4/5 test wiring is recorded in the bench record.</text>
     <text x="48" y="709" fill="#64748b" font-size="14">Architecture source: docs/architecture.md · Evidence source: hardware/data/pin-map.json</text>
   </g>
 </svg>

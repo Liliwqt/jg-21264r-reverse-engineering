@@ -1,20 +1,24 @@
 JG-21264R - owner-reported continuity, working numbering
 
-                     U1                                                     U2
- 16.   15NEG 14NEG 13.   12.   11NEG 10NEG 09.          16.   15NEG 14NEG 13.   12.   11NEG 10NEG 09.
- +-----------------------------------------------+      +-----------------------------------------------+
- |                     1818BM                    |      |                     1818BM                    |
- +-----------------------------------------------+      +-----------------------------------------------+
- 01A   02C   03D   04B   05A   06H   07E   08B          01A   02F   03G   04B   05A   06I   07J   08B
+                     U1                                                             U2
+ 16:1A  15:NEG 14:NEG 13:1B  12:2A  11:NEG 10:NEG 09:2B         16:3A  15:NEG 14:NEG 13:3B  12:4A  11:NEG 10:NEG 09:4B
+ +-------------------------------------------------------+      +-------------------------------------------------------+
+ |                         1818BM                        |      |                         1818BM                        |
+ +-------------------------------------------------------+      +-------------------------------------------------------+
+ 01:A   02:C   03:D   04:B   05:A   06:H   07:E   08:B          01:A   02:F   03:G   04:B   05:A   06:I   07:J   08:B
 
 
                      U3
- 16ANT 15NEG 14C   13D   12H   11E   10F   09G
- +-----------------------------------------------+
- |                   Controller                  |
- +-----------------------------------------------+
- 01NEG 02A   03.   04.   05A   06I   07J   08.
+ 16:ANT 15:NEG 14:C   13:D   12:H   11:E   10:F   09:G
+ +-------------------------------------------------------+
+ |                      U3 footprint                     |
+ +-------------------------------------------------------+
+ 01:NEG 02:A   03:X1A 04:X1B 05:A   06:I   07:J   08:.
 
-Matching IDs = reported continuity; . = unrecorded.
+Matching group IDs = reported continuity; . = unrecorded. Motor IDs 1A/1B through 4A/4B mark distinct terminals, not a shared net.
 NEG = reported battery-negative beeps; ANT = reported antenna connection.
 Temporary beeps and physical numbering remain unverified.
+
+X1 marking: 16.000 MHz; non-polarized.
+nearest the X1 PCB marking -> U3-3 (X1A)
+other lead -> U3-4 (X1B)

@@ -1,0 +1,18 @@
+menu "Standalone GPIO bench test"
+
+config GPIO_BENCH_PIN_A
+    int "Standalone test GPIO A"
+    range 4 18
+    default 4
+    help
+        Verify this GPIO is exposed and unused on your exact development board.
+        This is an ESP32-only multimeter test, not a motor-driver assignment.
+
+config GPIO_BENCH_PIN_B
+    int "Standalone test GPIO B"
+    range 4 18
+    default 5
+    help
+        Must differ from GPIO A. Keep the RC board and motors disconnected.
+
+endmenu

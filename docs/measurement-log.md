@@ -21,8 +21,20 @@ Recorded into this repository on **2026-11-01** from the owner's conversation. I
 | M13 | U3-15, U3-1, U1-15, U1-14, U2-15, U2-14 beep to the negative terminal | NEG; duration/resistance not recorded |
 | M14 | U1-10, U1-11, U2-10, U2-11 are also connected to the negative terminal | NEG; owner report, resistance/duration not supplied |
 | M15 | The blue mapped group (U1-4, U1-8, U2-4, U2-8) connects to battery positive | B; owner report, voltage/resistance not supplied |
+| M16 | U1 pins 16 and 13 are the two outputs for Motor 1 | M1; distinct terminals |
+| M17 | U1 pins 12 and 9 are the two outputs for Motor 2 | M2; distinct terminals |
+| M18 | U2 has the same 16/13 output pairing | M3; project alias for U2 channel 1 |
+| M19 | U2 has the same 12/9 output pairing | M4; project alias for U2 channel 2 |
+| M20 | Silver oval crystal case reads 16.000; PCB marking is X1 | X1; nominal 16 MHz interpretation |
+| M21 | Crystal lead nearest the X1 PCB marking connects to U3-3; other lead connects to U3-4 | X1A / X1B; separate leads, no polarity implied |
+
+Motor pairs describe two separate outputs across a motor, not direct continuity between those outputs. M3/M4 are project aliases; physical socket order, chassis positions, and polarity are not established.
 
 The owner also reported that some pin pairs appeared to beep while a capacitor charged. No specific pairs were identified. Preserve all current groups as **reported**, and do not promote any to verified direct copper until the stable-resistance check is recorded.
+
+## Later bench measurements and U3 removal
+
+The [bench record](bench-record.md) captures the later resistance/voltage readings, regulator candidate, tentative LED path, one-lead isolation checks, and owner-reported complete U3 removal. Original records above remain historical; U3 references now identify footprint pads.
 
 ## Corrections applied
 
