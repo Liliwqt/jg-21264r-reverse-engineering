@@ -150,8 +150,99 @@ The owner reported the assembly complete, then approximately 10 kΩ for the requ
 
 All checks were instructed unpowered, with ESP32 wires and motors disconnected. These are owner-reported physical measurements, not independently reproduced by the agent. They support the intended passive paths but do not certify all adjacent pads or driven input behavior.
 
-### Next assembly step — still unpowered
+### Three-wire assembly — owner-reported complete
 
-With battery, USB, and all motors disconnected, connect ESP32 GND to RC B−; GPIO4 to the loose 1 kΩ end leading to U3 pad 14; GPIO5 to the loose 1 kΩ end leading to U3 pad 13. This adds only ground and the two resistor-limited signal paths. Do not connect ESP32 3.3 V/5 V to RC B+. This wiring step does not authorize applying power or a motor test. Completion of these three wires has not yet been reported.
+With battery, USB, and all motors disconnected, connect ESP32 GND to RC B−; GPIO4 to the loose 1 kΩ end leading to U3 pad 14; GPIO5 to the loose 1 kΩ end leading to U3 pad 13. This adds only ground and the two resistor-limited signal paths. Do not connect ESP32 3.3 V/5 V to RC B+. This wiring step does not authorize applying power or a motor test. The owner subsequently reported these three wires connected.
 
-Next: document the no-motor-load input test, firmware scope, and power sequencing before energizing the interconnected setup. The existing standalone firmware instructions remain ESP32-only at this checkpoint.
+The subsequent operator-guided no-motor-load input experiment is recorded below. The existing GPIO waveform was reused as a test signal; motor-control firmware has not been implemented or flashed.
+
+
+## Connected first-pair input experiment — 2026-11-02
+
+The owner confirmed the three wires connected: ESP32 GND→B−, GPIO4→1 kΩ→U3 pad 14/U1-2, GPIO5→1 kΩ→U3 pad 13/U1-3. Both 10 kΩ driver-side pulldowns remain to B−. No ESP32 3.3 V/5 V-to-RC-supply connection was instructed. All motors remained instructed disconnected throughout.
+
+### Firmware scope and power sequence
+
+The already-flashed standalone GPIO program was reused as a manually commanded test signal generator; no firmware code or device flash changed for this experiment. Its source/banner still describe its original standalone use. This section records the separately guided resistor-interface experiment, not general approval to attach arbitrary RC inputs or operate motors with that program.
+
+1. Assemble unpowered and check the passive network as recorded above.
+2. With RC battery and all motors disconnected, power only the ESP32 from USB. Wait for the monitor banner and send `0`; do not send a HIGH command into the unpowered RC board. Check both input pads to B−.
+3. Keep USB on and motors disconnected; attach the previously checked single nominal 3.7 V RC cell with correct polarity. Check U1-1 and both input-pad idle voltages before commands.
+4. Command `1` while measuring pad 14 to B−, then confirm its return to LOW. Command `2` while measuring pad 13 to B− and confirm its return to LOW. No simultaneous-HIGH state or motor load was tested.
+5. For shutdown, request `0`, disconnect RC battery, then disconnect USB before wiring or resistance changes.
+
+### Owner-reported results
+
+| Condition / probe setup | Reported result |
+| --- | --- |
+| USB-only, command `0`, red on pads 14/13 in turn, black B− | Owner replied 0 to the two-pad check; interpreted as both approximately 0 V |
+| USB plus RC single cell, red U1-1, black B− | 3.3 V |
+| Both powered, before HIGH commands, pads 14/13 to B− | Owner replied 0 to the two-pad check; interpreted as both approximately 0 V |
+| Command `1`, pad 14/U1-2 to B− | 2.94 V |
+| Pad 14 after approximately ten seconds | Returned to approximately 0 V, explicitly confirmed |
+| Command `2`, pad 13/U1-3 to B− | Owner replied “same” to approximately 2.9 V and return to 0 V; recorded as matching the prior approximately 2.94 V pulse/return without a separate displayed number |
+
+These are owner-reported physical measurements, not mocked or independently repeated by the agent. They establish the observed input-node voltages only. The resistor divider is consistent with roughly 2.9 V from the ESP32 HIGH level; acceptable driver input thresholds and motor behavior are not yet demonstrated. Reset transients, loaded behavior, inactive-input voltage during the other command, and loaded driver behavior remain unmeasured.
+
+The subsequent differential driver-output check is recorded below; its black probe was on U1-13 rather than B−.
+
+
+## First-channel differential output check — 2026-11-02
+
+With motors instructed disconnected and both boards powered as above, the owner measured DC voltage with **red on U1-16 and black on U1-13**, keeping the probes unchanged between commands. Vout below means V(U1-16) − V(U1-13), not an individual pin voltage relative to ground.
+
+| Serial command | Requested GPIO4 / GPIO5 state | Owner-reported differential Vout |
+| --- | --- | --- |
+| `1` | HIGH / LOW | **+3.89 V** |
+| `2` | LOW / HIGH | **−3.89 V** |
+| `0` | LOW / LOW | **0 V** |
+
+**Sign correction:** the first reply appeared to report −3.89 V for command `1`; the owner explicitly corrected that first result to positive. The subsequent command `2` result was explicitly −3.89 V. The final table incorporates that correction; the earlier sign interpretation is superseded.
+
+These owner-reported physical measurements demonstrate opposite differential output polarities for the two single-HIGH commands on the observed U1-16/13 pair. They do not establish output current capability, chassis direction, other channels, reset behavior, PWM, or an operating motor. A 0 V differential reading with both inputs LOW does not distinguish coast/high-impedance from active braking, nor prove that both output pins are individually at ground. Both-HIGH behavior remains untested.
+
+Next proposed step: request `0`, disconnect RC battery first and USB second, leave motors disconnected, confirm the logic rail has discharged, then trace the two contacts of the appropriate motor socket to U1-16 and U1-13 using unpowered continuity/resistance. Physical socket identity was not yet recorded at that step; the owner subsequently identified it below. A short-pulse motor-test procedure/firmware remains to be prepared before motor connection; the current approximately ten-second GPIO test is still a measurement generator.
+
+
+## M1 socket identification and short-pulse firmware preparation — 2026-11-02
+
+The owner identifies **Motor 1 at the very top left**, in response to the request to identify the U1-16/13 socket with the connector-side photo upright. Recorded as the first of four left motor sockets in that photo. No separate per-contact resistance values or new photograph were supplied.
+
+An opt-in M1 bench mode is now prepared in the existing ESP-IDF project. It uses GPIO4/5 and the measured 1 kΩ/10 kΩ network, requires lowercase `a` followed by `1`/`2` within five seconds, requests LOW after an approximately 500 ms pulse, ignores pulse-extension/reversal attempts during a pulse, and enforces a two-second software cooldown plus a fresh arm. Console logging is isolated from the output task; stop requests have a separate notification. Original ten-second meter mode remains the default for fresh configurations and must not be used for a motor test.
+
+Local SDK configuration selects the new mode and its build passed. Pure-C host tests passed startup, no unarmed output, arm expiry, fixed deadline, repeated/reverse commands, cooldown, rearming, early/unknown stop, delayed tick, and reset scenarios. These simulate time/commands and are not hardware evidence. The standalone branch was additionally cross-compiled with real ESP32-S3 SDK/compiler flags. No new flash, motor connection, motor motion, or physical pulse-timing test has occurred. The existing device image is still the prior meter-test firmware until the owner flashes and confirms the new banner.
+
+Next step is **flash only**, RC battery and every motor unplugged, USB powering ESP32, then confirm `MOTOR BENCH: 500 ms` and `DISARMED` in the monitor. The [motor-bench procedure](motor-bench.md) separates this step from subsequent no-motor startup checks and an eventual single original unloaded motor pulse. This follow-up remains local and uncommitted; no push was made.
+
+
+## First M1 motor pulses — owner-reported physical results, 2026-11-02
+
+The owner confirmed uploading and seeing the **MOTOR BENCH: 500 ms** banner. With the new image, the owner reported 0 V for the USB-only pad-14/13 check and matching expected powered no-motor checks (U1-1 approximately 3.3 V, U1-16 relative to U1-13 approximately 0 V). Separate numeric readings were not supplied for the matching reply.
+
+The owner then confirmed connecting one original motor to top-left M1 after the instructed shutdown (RC battery first, USB second). Other motors remained instructed unplugged; wheel-raised/free-running setup was instructed, not photographed or inspected by the agent. ESP32 USB was applied before the RC single cell, with the new mode DISARMED and command `0` requested.
+
+| Observation | Owner report |
+| --- | --- |
+| Both powered, M1 attached, before arming | Motor stayed still |
+| Lowercase `a`, wait for ARMED, then `1` | Motor moved and stopped |
+| Wait for DISARMED/complete stop; `a`, wait for ARMED, then `2` | Yes to opposite direction and then stopping |
+
+This establishes owner-observed bidirectional motion and automatic stopping for the first M1 experiment. The configured pulse is 500 ms; actual physical pulse duration, stop time, current, temperature, reset transients, and loaded/stall behavior were not measured. No physical manual-midpulse-stop, stop-on-wire-loss, multi-motor, Wi-Fi, or PWM claim is made. Coast versus active brake remains unresolved.
+
+### Chassis role remains partly unknown
+
+The owner reports no separate steering mechanism in the car and assumes M1 is a driving-wheel motor. This is a tentative role, not identification of which wheel, axle, or side is connected. The steering method and left/right/chassis mapping remain unconfirmed; do not choose skid-steer/tank mixing from that statement alone.
+
+Next: send `0`, disconnect RC battery then USB before changing wiring; identify which wheel/mechanism actually moved under M1 (or whether the test motor is loose). Only the first motor channel has been exercised, and the interface presently contains only the two signal resistors and two pulldowns for M1. These follow-up results remain local and uncommitted; no push was made.
+
+
+## Disassembled setup and cleanup plan — 2026-11-02
+
+The owner clarified that the car is disassembled. After confirming power and motors disconnected, the owner was instructed to temporarily disconnect GPIO4/5 and move the resistor junctions from U3 14/13 to 12/11 for M2. The owner asked whether resoldering was necessary; **completion of that move was never reported**. The next request is to clean up the wiring and make a separate board. That plan supersedes the pending temporary retarget instruction.
+
+The [permanent interface plan](interface-board.md) exposes eight separate control traces (U3 14, 13, 12, 11, 10, 9, 6, 7) plus a larger B− ground connection, with one 1 kΩ series and one 10 kΩ driver-side pulldown per lane. It does not connect all sixteen U3 pads, motor power, the original oscillator/antenna, or the tentative LED path. Full population needs eight of each resistor (six additional of each beyond the existing two); M1-only initial population remains possible. Board construction, its continuity/isolation checks, six additional ESP32 GPIO assignments, and M2–M4 function tests remain pending. No PCB artwork or mechanical dimensions have been prepared.
+
+
+## Permanent breakout clarification — 2026-11-02
+
+The owner wants permanent extensions from the removed U3 footprint to a separate board. The clarified plan is one independent wire per signal pad (6, 7, 9, 10, 11, 12, 13, 14), plus ground from the larger B− point. “Bridge” here means extending the signals to a header, not joining pads electrically. The remaining pads are left available and unconnected for this motor-only interface; original ground/shared rail/crystal/antenna and tentative LED associations are listed in the interface-board document. No soldered breakout completion or new board construction has been reported. The owner then explicitly requested publishing this progress.

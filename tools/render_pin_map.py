@@ -128,13 +128,13 @@ def markdown(data, membership):
         lines.append(f"| {group['symbol']} | {group['id']} | {', '.join(group['members'])} | {', '.join(group['external']) or '—'} | {group['function']} |")
     lines.extend([
         "", "## Reported motor-output pairs", "",
-        "M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. These names do not identify a physical socket order, chassis side, or rotation direction. A/B are neutral terminal labels, not fixed positive/negative polarity.", "",
+        "M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. Socket positions below are owner reports where supplied; remaining positions, chassis side, and rotation direction are unassigned. A/B are neutral terminal labels, not fixed positive/negative polarity.", "",
         "**Each motor connects between its A and B output terminals. A motor pair is not recorded as two pins shorted together.**", "",
-        "| Symbol | Motor | IC | Terminal A | Terminal B | Source record |",
-        "| --- | --- | --- | --- | --- | --- |",
+        "| Symbol | Motor | IC | Terminal A | Terminal B | Socket | Source record |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ])
     for motor in data.get("motors", []):
-        lines.append(f"| {motor['symbol']} | {motor['id']} | {motor['chip']} | {motor['pins'][0]} | {motor['pins'][1]} | {motor['record']} |")
+        lines.append(f"| {motor['symbol']} | {motor['id']} | {motor['chip']} | {motor['pins'][0]} | {motor['pins'][1]} | {motor.get('socket_label', 'Not mapped')} | {motor['record']} |")
     lines.extend(["", "## Crystal marking and physical lead reference", ""])
     for crystal in data.get("crystals", []):
         lines.extend([
@@ -211,7 +211,8 @@ def svg(data, membership):
         y = 832 + index * 26
         pins = f"{motor['chip']}-{motor['pins'][0]} / {motor['chip']}-{motor['pins'][1]}"
         out.append(f'<rect x="70" y="{y-12}" width="12" height="12" rx="6" fill="{motor["color"]}"/>')
-        out.append(f'<text x="96" y="{y}" fill="#e2e8f0" font-size="15">{motor["id"]} · {pins} · terminal A / B</text>')
+        detail = motor.get("socket_label", "terminal A / B")
+        out.append(f'<text x="96" y="{y}" fill="#e2e8f0" font-size="15">{motor["id"]} · {pins} · {html.escape(detail)}</text>')
     for crystal in data.get("crystals", []):
         out.append('<rect x="690" y="880" width="540" height="82" rx="10" fill="#111c2e" stroke="#334155"/>')
         label = f"{crystal['id']} · {crystal['marking']} MHz · non-polarized crystal"
@@ -220,7 +221,7 @@ def svg(data, membership):
         out.append(f'<text x="714" y="930" fill="#cbd5e1" font-size="12">{html.escape(leads)}</text>')
         out.append('<text x="714" y="950" fill="#94a3b8" font-size="12">X1A / X1B label separate leads, not positive / negative.</text>')
     out.extend([
-        '<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Motor numbers do not specify socket order.</text>',
+        '<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Socket labels are owner reports; other positions unmapped.</text>',
         '<path d="M48 975H1232" stroke="#334155"/>',
         '<text x="48" y="1003" fill="#cbd5e1" font-size="14">Original-board group references retained. U3 is removed; its numbers identify footprint pads. Paired component terminals are separate.</text>',
         '<text x="48" y="1029" fill="#fbbf24" font-size="14">Rail readings are owner-reported. Package numbering and driver pin functions remain unverified.</text>',
@@ -240,6 +241,9 @@ def main():
         plain += f"\n{crystal['id']} marking: {crystal['marking']} MHz; non-polarized.\n"
         for connection in crystal["connections"]:
             plain += f"{connection['lead_reference']} -> {connection['chip']}-{connection['pin']} ({crystal['id']}{connection['terminal']})\n"
+    for motor in data.get("motors", []):
+        if motor.get("socket_label"):
+            plain += f"\n{motor['id']} socket: {motor['socket_label']} ({motor['socket_reference']})\n"
     plain.encode("ascii")
     files = {
         ROOT / "docs/pin-map.md": markdown(data, membership),

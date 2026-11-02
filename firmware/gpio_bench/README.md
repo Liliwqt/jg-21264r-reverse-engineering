@@ -1,8 +1,19 @@
-# Standalone ESP32-S3 GPIO bench test
+# ESP32-S3 bench firmware
 
-**Use USB power and a multimeter only. Keep the RC board, its battery, all motors, and all other external wiring disconnected from the ESP32.** No external resistors are needed to measure a bare GPIO with the meter in DC-voltage mode.
+**For the standalone procedure below, use USB power and a multimeter only. Keep the RC board, its battery, all motors, and all other external wiring disconnected from the ESP32.** No external resistors are needed to measure a bare GPIO with the meter in DC-voltage mode.
 
-This small ESP-IDF application starts GPIO4 and GPIO5 LOW after application initialization. A serial command can raise one output for approximately ten seconds, then it returns LOW. It implements no motor driver, steering, PWM, Wi-Fi, or Bluetooth. It is not suitable for connecting motors or the salvaged board.
+This ESP-IDF project starts GPIO4/5 LOW after application initialization and offers two build modes:
+
+| Mode | Selection | Behavior |
+| --- | --- | --- |
+| Standalone meter test | Default, `CONFIG_GPIO_BENCH_MOTOR_TEST` off | Original ten-second GPIO pulses; no motor attached |
+| First M1 experiment | Opt-in, `CONFIG_GPIO_BENCH_MOTOR_TEST=y` | Fresh `a` required for each 500 ms pulse; two-second software cooldown; GPIO4/5 only |
+
+The local SDK configuration now selects the **motor-test mode**, built locally and subsequently flashed by the owner. For a fresh configuration use `idf.py menuconfig` → **JG-21264R bench test → Enable manually armed 500 ms M1 motor test**. The [motor-bench procedure](../../docs/motor-bench.md) starts with flashing while RC battery and motors are unplugged, then requires a **MOTOR BENCH: 500 ms** banner. Do not attach a motor to the ten-second standalone mode.
+
+The existing physical measurements used the previous meter-test image; they are recorded in the [bench record](../../docs/bench-record.md). The new state machine has host command/time tests, plus owner-reported M1 motion in both directions and stopping after each pulse. Exact physical pulse duration, rated load, reset transients, and other channels remain unverified. No steering, PWM, Wi-Fi, Bluetooth, or full vehicle-control stack is implemented.
+
+**The remaining instructions on this page describe standalone meter mode. For motor mode use the linked motor-bench procedure.**
 
 ## Project and toolchain
 
@@ -18,7 +29,7 @@ idf.py set-target esp32s3
 idf.py build
 ```
 
-The standalone test defaults to **GPIO4 and GPIO5**, not physical header positions 4 and 5. Confirm the headers marked `4`/`IO4` and `5`/`IO5` on the exact development board are exposed and unused before testing. These choices do not assign GPIOs to the RC board. If necessary, use `idf.py menuconfig` → **Standalone GPIO bench test** to select two distinct unused GPIOs in the allowed 4–18 range. A board can use some of these pins for its own peripherals; the range is not a guarantee of header availability.
+The standalone test defaults to **GPIO4 and GPIO5**, not physical header positions 4 and 5. Confirm the headers marked `4`/`IO4` and `5`/`IO5` on the exact development board are exposed and unused before testing. The opt-in motor experiment is restricted to the measured GPIO4/5 first-pair interface; other GPIOs are standalone choices only. If necessary, use `idf.py menuconfig` → **JG-21264R bench test** to select two distinct unused GPIOs in the allowed 4–18 range. A board can use some of these pins for its own peripherals; the range is not a guarantee of header availability.
 
 ## Console and flashing
 
@@ -49,9 +60,9 @@ Once that result is recorded, type a command into the primary serial monitor:
 | `2` | LOW | HIGH briefly | GPIO5 near the board's 3.3 V logic level |
 | Any other non-newline character | LOW | LOW | Near 0 V |
 
-Each `1` or `2` requests a fresh approximately ten-second test. Do not hold a key down: repeated commands can extend the test. A separate output task checks the deadline even if console input is waiting. The owner has reported both command pulses reaching 3.18 V and returning to 0 V, with GPIO4 at 0 V on application startup. Exact timing, reset transients, and loaded behavior have not been measured. This software timeout is not a hardware safety interlock or a motor watchdog. See the [bench record](../../docs/bench-record.md) for the physical observations and the separate, still-unpowered RC interface assembly checkpoint.
+Each `1` or `2` requests a fresh approximately ten-second test. Do not hold a key down: repeated commands can extend the test. A separate output task checks the deadline even if console input is waiting. The owner has reported both command pulses reaching 3.18 V and returning to 0 V, with GPIO4 at 0 V on application startup. Exact timing, reset transients, and loaded behavior have not been measured. This software timeout is not a hardware safety interlock or a motor watchdog. See the [bench record](../../docs/bench-record.md) for the physical observations and the later, separately guided no-motor-load RC input experiment.
 
-Internal pulldowns are configured during application startup; they do not guarantee a LOW state throughout reset, flashing, or power sequencing. Neither a successful build nor these GPIO measurements establishes a safe interface to the salvaged driver. Keep that interface disconnected until its input behavior, loading, startup biasing, and wiring have been established.
+Internal pulldowns are configured during application startup; they do not guarantee a LOW state throughout reset, flashing, or power sequencing. Neither a successful build nor these GPIO measurements establishes a safe interface to the salvaged driver. Do not infer a general-purpose driver interface from these measurements; the first output pair has no-motor voltage observations plus one owner-reported original-motor jog/stop experiment, with reset and rated-load behavior still unverified.
 
 ## Official references
 

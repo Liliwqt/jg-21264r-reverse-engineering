@@ -12,7 +12,7 @@ The connector-side photo is a separate view. It must be mirrored/aligned before 
 
 ## Current physical state
 
-The owner reports U3 completely removed and the empty footprint clear. Approximately 3.3 V remains at U1-1 relative to B− after removal. No post-removal photo has been reviewed by the agent. The original images and connection groups document the board before rework; U3 numbers now refer to PCB pads. All eight mapped control paths were later reported to give steady continuity. The first-pair resistor network at pads 14/13 is assembled and its passive checks matched; completion of the three ESP32 wires is not yet reported. See the [bench record](bench-record.md).
+The owner reports U3 completely removed and the empty footprint clear. Approximately 3.3 V remains at U1-1 relative to B− after removal. No post-removal photo has been reviewed by the agent. The original images and connection groups document the board before rework; U3 numbers now refer to PCB pads. All eight mapped control paths were later reported to give steady continuity. The first-pair resistor network at pads 14/13 is assembled and its passive checks matched; the owner has confirmed the three ESP32 wires connected and measured approximately 2.94 V command pulses returning to 0 V at the two input pads with no motors connected. See the [bench record](bench-record.md).
 
 ## Inventory and evidence
 
@@ -22,7 +22,7 @@ The owner reports U3 completely removed and the empty footprint clear. Approxima
 | U1 | Reported YX 1818BM, second line 21006 | Candidate motor driver; manufacturer pinout unverified |
 | U2 | Reported YX 1818BM, second line 21006 | Candidate motor driver; manufacturer pinout unverified |
 | U3 | Reported XHGC XC24558; XC2455B is a possible reading | Candidate radio/controller; exact marking unresolved |
-| Four left sockets | Motor connections | Owner reports four IC output pairs; physical socket order and chassis positions not yet correlated |
+| Four left sockets | Motor connections | Owner reports four IC output pairs; M1 top-left socket identified by owner; remaining socket order and chassis positions unassigned |
 | Right socket | LED | Owner read the LED label; earlier battery-socket guess superseded |
 | Bottom two-pin footprint | SPK | Owner read the SPK label; earlier SW interpretation superseded |
 | Battery connections | Positive and negative wiring identified by owner, including B+ marking | Exact annotated photo/pad references and B+ circuit tracing still needed |
@@ -58,7 +58,7 @@ The blue **Group B** (U1-4/8 and U2-4/8) was subsequently reported to connect to
 | M3 | U2 | 16 | 13 |
 | M4 | U2 | 12 | 9 |
 
-M1/M2 follow the owner's U1 motor names; M3/M4 distinguish the two U2 channels in this project. Each row describes two separate output terminals across one motor, not a common net. A/B do not specify fixed polarity or rotation direction. Stable-resistance evidence, physical socket order, and powered behavior remain to be established.
+M1/M2 follow the owner's U1 motor names; M3/M4 distinguish the two U2 channels in this project. Each row describes two separate output terminals across one motor, not a common net. A/B do not specify fixed polarity or rotation direction. The owner identifies M1 at the top-left motor socket in the connector-side photo with JG-21264R upright. One original M1 motor has since moved in both directions and stopped after the armed pulse tests, according to the owner. Other socket positions, rated-load behavior, and chassis mapping remain to be established. For the first U1-16/13 pair only, the owner measured +3.89 V for command `1`, −3.89 V for `2`, and 0 V for `0`, with red on U1-16, black on U1-13, and all motors disconnected. The first reading was explicitly corrected to positive; see the bench record.
 
 ## Regulator candidate
 
@@ -67,3 +67,8 @@ The small three-lead device is reported to read `662K`, consistent with an XC620
 ## Crystal X1
 
 The owner read **X1** on the PCB beside the silver oval component and **16.000** on its case. The marking indicates a nominal **16 MHz** quartz crystal. The lead nearest the X1 print connects to **U3-3**; the other lead connects to **U3-4**. These are physical reference labels, not positive/negative polarity. Do not infer that the two IC pins share one copper net or assign oscillator-input/output roles without a verified pinout.
+
+
+## M1 physical role
+
+The owner reports no separate steering mechanism and assumes M1 drives a wheel. The first M1 motor stayed still before arming, moved on command `1`, and moved oppositely on command `2`, stopping after both pulses. The wheel/axle/side and turning method have not been identified. This is not evidence for a particular tank/skid-steer or conventional-steering model. See the latest bench record.

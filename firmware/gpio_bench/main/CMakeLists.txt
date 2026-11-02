@@ -1,3 +1,3 @@
-idf_component_register(SRCS "gpio_bench.c"
+idf_component_register(SRCS "gpio_bench.c" "motor_bench_state.c"
                        INCLUDE_DIRS "."
                        PRIV_REQUIRES esp_driver_gpio esp_timer)

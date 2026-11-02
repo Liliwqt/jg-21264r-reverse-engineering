@@ -202,7 +202,7 @@
 <text x="783" y="822" fill="#cbd5e1" font-size="12">U3-15 → battery negative</text>
 <text x="70" y="800" fill="#f8fafc" font-size="18" font-weight="700">Reported motor pairs · separate A/B terminals</text>
 <rect x="70" y="820" width="12" height="12" rx="6" fill="#84cc16"/>
-<text x="96" y="832" fill="#e2e8f0" font-size="15">M1 · U1-16 / U1-13 · terminal A / B</text>
+<text x="96" y="832" fill="#e2e8f0" font-size="15">M1 · U1-16 / U1-13 · top-left socket</text>
 <rect x="70" y="846" width="12" height="12" rx="6" fill="#facc15"/>
 <text x="96" y="858" fill="#e2e8f0" font-size="15">M2 · U1-12 / U1-9 · terminal A / B</text>
 <rect x="70" y="872" width="12" height="12" rx="6" fill="#fb923c"/>
@@ -213,7 +213,7 @@
 <text x="714" y="906" fill="#67e8f9" font-size="16" font-weight="700">X1 · 16.000 MHz · non-polarized crystal</text>
 <text x="714" y="930" fill="#cbd5e1" font-size="12">nearest the X1 PCB marking → U3-3; other lead → U3-4</text>
 <text x="714" y="950" fill="#94a3b8" font-size="12">X1A / X1B label separate leads, not positive / negative.</text>
-<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Motor numbers do not specify socket order.</text>
+<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Socket labels are owner reports; other positions unmapped.</text>
 <path d="M48 975H1232" stroke="#334155"/>
 <text x="48" y="1003" fill="#cbd5e1" font-size="14">Original-board group references retained. U3 is removed; its numbers identify footprint pads. Paired component terminals are separate.</text>
 <text x="48" y="1029" fill="#fbbf24" font-size="14">Rail readings are owner-reported. Package numbering and driver pin functions remain unverified.</text>

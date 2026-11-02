@@ -48,16 +48,16 @@ U1 is upper left, U2 upper right, and the U3 footprint is below U1. **U3 is remo
 
 ## Reported motor-output pairs
 
-M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. These names do not identify a physical socket order, chassis side, or rotation direction. A/B are neutral terminal labels, not fixed positive/negative polarity.
+M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. Socket positions below are owner reports where supplied; remaining positions, chassis side, and rotation direction are unassigned. A/B are neutral terminal labels, not fixed positive/negative polarity.
 
 **Each motor connects between its A and B output terminals. A motor pair is not recorded as two pins shorted together.**
 
-| Symbol | Motor | IC | Terminal A | Terminal B | Source record |
-| --- | --- | --- | --- | --- | --- |
-| 🟢 | M1 | U1 | 16 | 13 | M16 |
-| 🟡 | M2 | U1 | 12 | 9 | M17 |
-| 🟠 | M3 | U2 | 16 | 13 | M18 |
-| 🟣 | M4 | U2 | 12 | 9 | M19 |
+| Symbol | Motor | IC | Terminal A | Terminal B | Socket | Source record |
+| --- | --- | --- | --- | --- | --- | --- |
+| 🟢 | M1 | U1 | 16 | 13 | top-left socket | M16 |
+| 🟡 | M2 | U1 | 12 | 9 | Not mapped | M17 |
+| 🟠 | M3 | U2 | 16 | 13 | Not mapped | M18 |
+| 🟣 | M4 | U2 | 12 | 9 | Not mapped | M19 |
 
 ## Crystal marking and physical lead reference
 

@@ -22,3 +22,5 @@ Temporary beeps and physical numbering remain unverified.
 X1 marking: 16.000 MHz; non-polarized.
 nearest the X1 PCB marking -> U3-3 (X1A)
 other lead -> U3-4 (X1B)
+
+M1 socket: top-left socket (First of four left motor sockets; connector-side photo with JG-21264R text upright.)

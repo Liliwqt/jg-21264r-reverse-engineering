@@ -1,4 +1,4 @@
-menu "Standalone GPIO bench test"
+menu "JG-21264R bench test"
 
 config GPIO_BENCH_PIN_A
     int "Standalone test GPIO A"
@@ -14,5 +14,13 @@ config GPIO_BENCH_PIN_B
     default 5
     help
         Must differ from GPIO A. Keep the RC board and motors disconnected.
+
+config GPIO_BENCH_MOTOR_TEST
+    bool "Enable manually armed 500 ms M1 motor test"
+    default n
+    help
+        Requires the measured GPIO4/GPIO5 1k/10k interface and M1 socket.
+        Each pulse requires a fresh arm command. Other motors disconnected.
+        Never connect a motor when the ten-second standalone mode is selected.
 
 endmenu

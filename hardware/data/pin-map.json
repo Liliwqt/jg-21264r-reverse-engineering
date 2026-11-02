@@ -10,8 +10,79 @@
     "map_scope": "Connection groups and chip numbering preserve original board observations. U3 references now identify footprint pads, not an installed chip.",
     "post_removal_rail": "Owner confirms approximately 3.3 V at U1-1 relative to B-.",
     "esp32_connected": null,
-    "esp32_connection_status": "Three-wire unpowered assembly instructed; completion has not been reported.",
-    "first_pair_passive_interface": "Owner reports two 1 kOhm series resistors and two 10 kOhm pulldowns at U3 pads 14/13 assembled and expected 10/11/20 kOhm checks matched; see docs/bench-record.md."
+    "esp32_connection_status": "Last motor-tested wiring was GPIO4/5 through the M1 resistor pair to U3 pads 14/13 with shared B-. Power and motors were later confirmed disconnected. Temporary GPIO disconnection/M2 retargeting was instructed but not confirmed complete; the permanent breakout plan supersedes that instruction. Current harness state is not confirmed.",
+    "first_pair_passive_interface": "Owner reports two 1 kOhm series resistors and two 10 kOhm pulldowns at U3 pads 14/13 assembled and expected 10/11/20 kOhm checks matched; see docs/bench-record.md.",
+    "first_pair_input_test": "Owner reports 3.3 V at U1-1 with both boards powered, both input pads idle near 0 V, pad 14 at 2.94 V on command 1 returning to 0 V, and pad 13 reported same on command 2. First output-pair measurements are recorded separately.",
+    "first_pair_output_test": {
+      "evidence": "Owner-reported physical DC-voltage measurements, motors disconnected; command 1 sign explicitly corrected to positive.",
+      "red_probe": "U1-16",
+      "black_probe": "U1-13",
+      "command_1_volts": 3.89,
+      "command_2_volts": -3.89,
+      "command_0_volts": 0,
+      "motor_socket": "Owner identifies M1 as top-left socket (first of four left sockets with connector-side JG-21264R text upright). Separate contact resistance values not supplied.",
+      "stop_mode": "Coast versus brake unresolved; 0 V differential does not establish output impedance."
+    },
+    "motor_bench_firmware": {
+      "mode": "CONFIG_GPIO_BENCH_MOTOR_TEST=y (local sdkconfig; default remains off)",
+      "pulse_ms": 500,
+      "fresh_arm_required": true,
+      "cooldown_ms": 2000,
+      "locally_built": true,
+      "new_mode_flashed": "Owner confirms upload and MOTOR BENCH: 500 ms banner.",
+      "motor_operation": "Owner reports M1 stayed still before arming, moved/stopped for a then 1, and moved oppositely/stopped for a then 2."
+    },
+    "first_motor_test": {
+      "motor": "M1",
+      "setup": "Owner says car is disassembled. One original motor was tested on M1; actual mounting/wheel position was not specified. Other motors were instructed unplugged.",
+      "startup_stayed_still": true,
+      "command_1_moved_and_stopped": true,
+      "command_2_opposite_and_stopped": true,
+      "evidence": "Owner reports in chat, not independently measured; actual pulse duration/current not measured.",
+      "chassis_role": "Owner reports no separate steering and assumes wheel drive. Actual wheel/side/mechanism not identified.",
+      "stop_mode": "Coast versus active brake unresolved."
+    },
+    "assembly_plan": {
+      "status": "Separate interface board requested; construction not reported. Supersedes pending M2 temporary retargeting, which was not reported complete.",
+      "u3_signal_pads": [
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        6,
+        7
+      ],
+      "ground": "Separate wire from larger B- connection; no need to solder U3 ground pads.",
+      "rc_connection_count": 9,
+      "lanes": 8,
+      "series_ohms": 1000,
+      "pulldown_ohms": 10000,
+      "full_resistor_quantities": {
+        "series": 8,
+        "pulldown": 8
+      },
+      "existing_resistor_quantities": {
+        "series": 2,
+        "pulldown": 2
+      },
+      "esp32_gpio_assignment": "M1 uses GPIO4/5; other six GPIOs unassigned.",
+      "functional_scope": "Only M1 motor-tested; other channel pairings require function tests.",
+      "reference": "docs/interface-board.md",
+      "unused_u3_pads": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        15,
+        16
+      ],
+      "unused_pad_policy": "Keep pads separate and available; not connected by motor-only interface, not declared unusable. Future LED investigation may use pad 8 after verification.",
+      "construction_confirmation": "Not reported; no permanent breakout or new board completion claimed."
+    }
   },
   "chips": [
     {"id": "U1", "label": "1818BM · driver candidate", "position": "upper left", "pins": 16},
@@ -19,7 +90,7 @@
     {"id": "U3", "label": "Controller candidate · marking unresolved", "position": "below U1", "pins": 16}
   ],
   "motors": [
-    {"id": "M1", "chip": "U1", "pins": [16, 13], "symbol": "🟢", "color": "#84cc16", "record": "M16"},
+    {"id": "M1", "chip": "U1", "pins": [16, 13], "symbol": "🟢", "color": "#84cc16", "record": "M16", "socket_label": "top-left socket", "socket_reference": "First of four left motor sockets; connector-side photo with JG-21264R text upright.", "socket_evidence": "Owner identification in response to socket-tracing prompt; no separate contact resistance values supplied."},
     {"id": "M2", "chip": "U1", "pins": [12, 9], "symbol": "🟡", "color": "#facc15", "record": "M17"},
     {"id": "M3", "chip": "U2", "pins": [16, 13], "symbol": "🟠", "color": "#fb923c", "record": "M18"},
     {"id": "M4", "chip": "U2", "pins": [12, 9], "symbol": "🟣", "color": "#e879f9", "record": "M19"}
