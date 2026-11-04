@@ -233,16 +233,33 @@ This establishes owner-observed bidirectional motion and automatic stopping for 
 
 The owner reports no separate steering mechanism in the car and assumes M1 is a driving-wheel motor. This is a tentative role, not identification of which wheel, axle, or side is connected. The steering method and left/right/chassis mapping remain unconfirmed; do not choose skid-steer/tank mixing from that statement alone.
 
-Next: send `0`, disconnect RC battery then USB before changing wiring; identify which wheel/mechanism actually moved under M1 (or whether the test motor is loose). Only the first motor channel has been exercised, and the interface presently contains only the two signal resistors and two pulldowns for M1. These follow-up results remain local and uncommitted; no push was made.
+At that 2026-11-02 checkpoint, the next task was to power down and identify which wheel/mechanism M1 moved. Only M1 had been exercised and its interface used two series resistors and two pulldowns; see the later M2 record below. These follow-up results were included in the 2026-11-02 published checkpoint.
 
 
 ## Disassembled setup and cleanup plan — 2026-11-02
 
 The owner clarified that the car is disassembled. After confirming power and motors disconnected, the owner was instructed to temporarily disconnect GPIO4/5 and move the resistor junctions from U3 14/13 to 12/11 for M2. The owner asked whether resoldering was necessary; **completion of that move was never reported**. The next request is to clean up the wiring and make a separate board. That plan supersedes the pending temporary retarget instruction.
 
-The [permanent interface plan](interface-board.md) exposes eight separate control traces (U3 14, 13, 12, 11, 10, 9, 6, 7) plus a larger B− ground connection, with one 1 kΩ series and one 10 kΩ driver-side pulldown per lane. It does not connect all sixteen U3 pads, motor power, the original oscillator/antenna, or the tentative LED path. Full population needs eight of each resistor (six additional of each beyond the existing two); M1-only initial population remains possible. Board construction, its continuity/isolation checks, six additional ESP32 GPIO assignments, and M2–M4 function tests remain pending. No PCB artwork or mechanical dimensions have been prepared.
+The [permanent interface plan](interface-board.md) exposes eight separate control traces (U3 14, 13, 12, 11, 10, 9, 6, 7) plus a larger B− ground connection, with one 1 kΩ series and one 10 kΩ driver-side pulldown per lane. It does not connect all sixteen U3 pads, motor power, the original oscillator/antenna, or the tentative LED path. Full population needs eight of each resistor (six additional of each beyond the existing two); M1-only initial population remains possible. At that 2026-11-02 checkpoint, board construction, its continuity/isolation checks, six additional ESP32 GPIO assignments, and M2–M4 function tests remained pending. See the 2026-11-05 M2 follow-up below for the later working report. No PCB artwork or mechanical dimensions have been prepared.
 
 
 ## Permanent breakout clarification — 2026-11-02
 
 The owner wants permanent extensions from the removed U3 footprint to a separate board. The clarified plan is one independent wire per signal pad (6, 7, 9, 10, 11, 12, 13, 14), plus ground from the larger B− point. “Bridge” here means extending the signals to a header, not joining pads electrically. The remaining pads are left available and unconnected for this motor-only interface; original ground/shared rail/crystal/antenna and tentative LED associations are listed in the interface-board document. No soldered breakout completion or new board construction has been reported. The owner then explicitly requested publishing this progress.
+
+
+## M2 follow-up and connection repair — owner report, 2026-11-05
+
+The owner reported M2 wiring ready. The instructed single-channel bench setup reuses GPIO4/5: GPIO4 through 1 kΩ to U3 pad 12/U1-6, GPIO5 through 1 kΩ to U3 pad 11/U1-7, with a 10 kΩ driver-side pulldown on each input and common B−. This reuses the existing 500 ms bench image; no additional GPIOs or simultaneous two-channel control were implemented.
+
+| Observation | Owner-reported result / limit |
+| --- | --- |
+| Initial run | Command `2` ran the motor; command `1` did not |
+| Fresh-arm retry | `0`, wait, `a`, wait for `ARMED`, then `1` still did not move the motor |
+| A-signal attachment | Owner explicitly says the wire is soldered directly to U1 pin 6, rather than U3 pad 12; these are the same originally mapped signal |
+| Series-path resistance | With battery and USB instructed disconnected, GPIO4-side end of the series resistor to U1-6 measured approximately **1 kΩ** (`1k yes`) |
+| Resolution | Owner then reports the motor works fine and the issue was a connection; exact failed joint and repair details were not specified |
+
+The USB-only and powered startup checks were proposed, but the owner advanced with “next” without individual readings. U1-6-to-B− was subsequently requested with approximately 10 kΩ expected; no numeric result was supplied before the owner reported the connection issue resolved. Do not copy M1's measured voltages, differential polarity, startup behavior, per-command stopping observations, or measured resistor quantities into M2's record. M2's final report is a general working result after repair, not a separate measured timing/load/stop-mode characterization.
+
+The owner requested recording and pushing this checkpoint. M3/M4, the full permanent interface-board/harness assembly, final multi-channel GPIO assignments, and chassis/socket mapping remain open. Current power state and simultaneous M1/M2 wiring were not specified. No firmware change or new flash was reported for this follow-up.

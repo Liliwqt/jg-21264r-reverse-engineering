@@ -1,6 +1,6 @@
 # First M1 motor experiment
 
-**Current status: the owner flashed the 500 ms mode and confirmed that M1 moved in both directions and stopped after each pulse.** Powered startup stayed still. Exact pulse duration and current were not measured. The procedure below is retained for repeatable tests; other channels, rated load, reset behavior, PWM, and phone control remain unverified or unimplemented. See the latest [bench record](bench-record.md) for the physical reports.
+**Current status: the owner flashed the 500 ms mode and confirmed that M1 moved in both directions and stopped after each pulse.** Powered startup stayed still. Exact pulse duration and current were not measured. The owner later reported M2 working after a connection repair on 2026-11-05. The procedure below retains the M1 pin references; M3/M4, rated load, reset behavior, PWM, and phone control remain unverified or unimplemented. See the latest [bench record](bench-record.md) for the physical reports.
 
 ## Recorded prerequisites
 
@@ -47,6 +47,12 @@ The owner reported the first forward/reverse command pulses moved M1 in opposite
 5. Wait for `DISARMED` and for the motor to stop completely. A reverse pulse (`a`, wait for `ARMED`, then `2`) is a subsequent observation, not an automatic sequence.
 6. For shutdown, send `0`, remove RC battery first, then USB. Use resistance/continuity mode only after all power is removed and stored rail voltage has fallen near zero.
 
+## M2 single-channel follow-up
+
+For M2, the instructed bench pair is GPIO4→1 kΩ→U1-6 (originally U3 pad 12) and GPIO5→1 kΩ→U1-7 (originally U3 pad 11), with driver-side 10 kΩ pulldowns and shared B−. The recorded M2 output pair is U1-12/9. The owner confirms a direct wire at U1-6 and approximately 1 kΩ through its series path, then reports M2 working after fixing a connection issue. No separate final per-command stop readings were supplied. See the [M2 bench record](bench-record.md#m2-follow-up-and-connection-repair--owner-report-2026-11-05).
+
+The current program still drives only GPIO4/5. Change channel wiring only with battery and USB disconnected; do not wire M1 and M2 together to the same outputs. A firmware/menu label mentioning M1 does not implement additional channels.
+
 ## Commands and limits
 
 | Input | Effect in motor-test mode |
@@ -57,7 +63,7 @@ The owner reported the first forward/reverse command pulses moved M1 in opposite
 | No input | Pulse and arm deadlines still expire |
 | After a pulse | A two-second software cooldown at LOW, then a fresh `a` required |
 
-The output task checks time on a 20 ms queue wait and does not print or wait for console output. Logging is a separate lower-priority task with a nonblocking notice queue. Stop requests use a separate task notification so later arm/direction characters cannot overwrite a queued stop. These are software measures, not a hardware interlock or a physically verified maximum pulse time. The owner has observed the first M1 motion/stop experiment; these observations do not verify a physical maximum pulse time or rated-load operation. Reset transients, load current, driver ratings, every other channel, PWM, Wi-Fi, and phone controls remain unverified or unimplemented.
+The output task checks time on a 20 ms queue wait and does not print or wait for console output. Logging is a separate lower-priority task with a nonblocking notice queue. Stop requests use a separate task notification so later arm/direction characters cannot overwrite a queued stop. These are software measures, not a hardware interlock or a physically verified maximum pulse time. The owner has observed the first M1 motion/stop experiment; these observations do not verify a physical maximum pulse time or rated-load operation. Reset transients, load current, driver ratings, M3/M4, PWM, Wi-Fi, and phone controls remain unverified or unimplemented.
 
 ## Local verification
 

@@ -5,12 +5,12 @@
   "numbering": "Owner working convention; physical pin-1 orientation not independently verified. Upper edge 16..9; lower edge 1..8.",
   "board_state": {
     "u3_removed": true,
-    "reported_date": "2026-11-02",
+    "reported_date": "2026-11-05",
     "evidence": "Owner reports complete removal and a clear pad inspection; no post-removal photo inspected by the agent.",
     "map_scope": "Connection groups and chip numbering preserve original board observations. U3 references now identify footprint pads, not an installed chip.",
     "post_removal_rail": "Owner confirms approximately 3.3 V at U1-1 relative to B-.",
     "esp32_connected": null,
-    "esp32_connection_status": "Last motor-tested wiring was GPIO4/5 through the M1 resistor pair to U3 pads 14/13 with shared B-. Power and motors were later confirmed disconnected. Temporary GPIO disconnection/M2 retargeting was instructed but not confirmed complete; the permanent breakout plan supersedes that instruction. Current harness state is not confirmed.",
+    "esp32_connection_status": "Latest bench setup instructed GPIO4/5 through the resistor pair to M2: U1-6/U3 pad 12 and U1-7/U3 pad 11 with shared B-. Owner confirms a direct wire to U1-6, approximately 1 kOhm series-path resistance, and working M2 operation after a connection repair. Current power state, exact B-wire attachment, and simultaneous M1/M2 wiring were not specified.",
     "first_pair_passive_interface": "Owner reports two 1 kOhm series resistors and two 10 kOhm pulldowns at U3 pads 14/13 assembled and expected 10/11/20 kOhm checks matched; see docs/bench-record.md.",
     "first_pair_input_test": "Owner reports 3.3 V at U1-1 with both boards powered, both input pads idle near 0 V, pad 14 at 2.94 V on command 1 returning to 0 V, and pad 13 reported same on command 2. First output-pair measurements are recorded separately.",
     "first_pair_output_test": {
@@ -43,7 +43,7 @@
       "stop_mode": "Coast versus active brake unresolved."
     },
     "assembly_plan": {
-      "status": "Separate interface board requested; construction not reported. Supersedes pending M2 temporary retargeting, which was not reported complete.",
+      "status": "Separate interface-board plan retained. Owner reports M2 wiring ready and operation working after a connection repair on 2026-11-05; full eight-lane board and harness completion not confirmed.",
       "u3_signal_pads": [
         14,
         13,
@@ -67,8 +67,8 @@
         "series": 2,
         "pulldown": 2
       },
-      "esp32_gpio_assignment": "M1 uses GPIO4/5; other six GPIOs unassigned.",
-      "functional_scope": "Only M1 motor-tested; other channel pairings require function tests.",
+      "esp32_gpio_assignment": "GPIO4/5 reused for single-channel bench testing: M1 first, then instructed M2. Six additional GPIOs for independent four-channel operation remain unassigned.",
+      "functional_scope": "M1 bidirectional motion/stopping observed by owner; M2 reported working after connection repair; M3/M4 function tests pending.",
       "reference": "docs/interface-board.md",
       "unused_u3_pads": [
         1,
@@ -81,7 +81,37 @@
         16
       ],
       "unused_pad_policy": "Keep pads separate and available; not connected by motor-only interface, not declared unusable. Future LED investigation may use pad 8 after verification.",
-      "construction_confirmation": "Not reported; no permanent breakout or new board completion claimed."
+      "construction_confirmation": "M2 wiring ready and direct U1-6 attachment owner-confirmed; full permanent breakout/new board completion not confirmed.",
+      "existing_resistor_quantities_evidence": "Two of each recorded on 2026-11-02; later M2 wiring does not establish whether parts were reused or the inventory increased."
+    },
+    "second_motor_test": {
+      "motor": "M2",
+      "reported_date": "2026-11-05",
+      "bench_gpio_pair_instructed": [
+        4,
+        5
+      ],
+      "input_a": {
+        "mapped_signal": [
+          "U3-12",
+          "U1-6"
+        ],
+        "attachment_confirmed": "Wire soldered directly to U1-6.",
+        "series_path_ohms_reported": 1000
+      },
+      "input_b": {
+        "mapped_signal": [
+          "U3-11",
+          "U1-7"
+        ],
+        "attachment_confirmation": "GPIO5 through 1 kOhm to this signal instructed; exact physical solder point not separately stated."
+      },
+      "initial_result": "Command 2 ran the motor; command 1 did not, including a fresh-arm retry.",
+      "resolution": "Owner reports works fine after a connection issue; exact failed joint and repair not specified.",
+      "status": "Owner-reported working after connection repair.",
+      "evidence": "Physical owner reports in chat; not independently measured or mocked. No separate M2 startup readings, numeric pulldown reading, final per-command stop observations, pulse duration, or load measurements supplied.",
+      "firmware_change": false,
+      "reference": "docs/bench-record.md"
     }
   },
   "chips": [

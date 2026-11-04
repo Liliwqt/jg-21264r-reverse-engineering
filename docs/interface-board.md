@@ -1,8 +1,8 @@
 # Permanent motor-signal interface board
 
-**Plan: eight separate U3 signal wires plus one B−/ground wire, not all sixteen U3 pads.** This is a perfboard/wired-interface plan, not fabrication-ready PCB artwork. Only M1 has an owner-reported motor test; other channel associations remain to be exercised.
+**Plan: eight separate U3 signal wires plus one B−/ground wire, not all sixteen U3 pads.** This is a perfboard/wired-interface plan, not fabrication-ready PCB artwork. M1 has a detailed owner-reported motor test; M2 was later reported working after a connection repair. M3/M4 remain to be exercised.
 
-The car is disassembled according to the owner. Wheel/chassis mapping can wait until assembly. The cleanup plan supersedes the pending instruction to move the temporary M1 resistor junctions to M2; that move was never reported complete. Keep power and motors disconnected during construction.
+The car is disassembled according to the owner. Wheel/chassis mapping can wait until assembly. The earlier cleanup plan superseded a pending temporary M2 move. On 2026-11-05 the owner reported M2 ready and subsequently working, with its A-signal wire directly on U1-6. Full separate-board/harness completion and simultaneous channel wiring remain unconfirmed. Keep power and motors disconnected during construction.
 
 ## RC-board connections
 
@@ -11,7 +11,7 @@ Use the owner's existing pad-number convention and the continuity map. Each A/B 
 | Proposed channel | Signal A: U3 pad → driver lead | Signal B: U3 pad → driver lead | Functional evidence |
 | --- | --- | --- | --- |
 | M1 | 14 → U1-2 | 13 → U1-3 | Owner reports both motion directions and stopping |
-| M2 | 12 → U1-6 | 11 → U1-7 | Continuity mapped; powered function pending |
+| M2 | 12 → U1-6 | 11 → U1-7 | Owner reports working after connection repair; A wire directly on U1-6; 1 kΩ series path confirmed |
 | M3 | 10 → U2-2 | 9 → U2-3 | Continuity mapped; powered function pending |
 | M4 | 6 → U2-6 | 7 → U2-7 | Continuity mapped; powered function pending |
 
@@ -57,9 +57,9 @@ RC-side labels:     P14  P13  P12  P11  P10  P9   P6   P7   GND
 ESP-side labels:   M1A  M1B  M2A  M2B  M3A  M3B  M4A  M4B  GND
 ```
 
-M1A/M1B correspond to the tested GPIO4/GPIO5 pair. GPIOs for the other six ESP-side signals are **not assigned yet**; confirm the actual ESP32-S3 board headers and update firmware before connecting or driving them. Do not connect several channel signals to the same GPIO to compensate for unassigned pins.
+M1A/M1B correspond to the original GPIO4/GPIO5 bench pair. For the M2-only follow-up the same GPIO4/5 pair was instructed to M2A/M2B, and the owner reported working operation after a connection repair. This is one-channel-at-a-time reuse, not simultaneous independent control. GPIOs for the other six ESP-side signals are **not assigned yet**; confirm the actual ESP32-S3 board headers and update firmware before connecting or driving them. Do not connect several channel signals to the same GPIO to compensate for unassigned pins.
 
-Solder flexible signal leads to the eight selected U3 pads once, route them to the connector, and secure the harness so movement does not pull on the small pads. Put the resistors and ground bus on the separate board. Provide readable labels so later tests change connector wiring rather than repeatedly heating the U3 pads. Perfboard with isolated copper pads or stripboard can implement the circuit; inspect any shared copper and isolate signal lanes as required by the actual board type.
+The original plan uses the eight selected U3 pads; a corresponding mapped driver lead is an alternative attachment point, as with the owner-confirmed M2 A wire at U1-6. Preserve separate signals and the series/pulldown network whichever attachment point is used. Solder flexible signal leads once, route them to the connector, and secure the harness so movement does not pull on the small pads. Put the resistors and ground bus on the separate board. Provide readable labels so later tests change connector wiring rather than repeatedly heating the U3 pads. Perfboard with isolated copper pads or stripboard can implement the circuit; inspect any shared copper and isolate signal lanes as required by the actual board type.
 
 ## Parts
 
@@ -71,7 +71,7 @@ Solder flexible signal leads to the eight selected U3 pads once, route them to t
 | Labeled nine-position connection, ESP32 side | 1 | Not established | As needed |
 | Perfboard, insulated wire, and strain relief | To fit the enclosure | Not established | As needed |
 
-The full board uses **sixteen resistors**, which is different from soldering all sixteen U3 pads. It can be laid out now with positions for all eight lanes and initially populated only for M1 using the existing four resistors. Leave unpopulated series positions open; keep untested/unpopulated motors and corresponding ESP32 signal wires unplugged.
+The available-parts column records the 2026-11-02 inventory; later M2 wiring does not establish a new total count or whether parts were reused. The full board uses **sixteen resistors**, which is different from soldering all sixteen U3 pads. It can be laid out now with positions for all eight lanes and initially populated only for M1 using the existing four resistors. Leave unpopulated series positions open; keep untested/unpopulated motors and corresponding ESP32 signal wires unplugged.
 
 ## Checks before power
 

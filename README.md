@@ -4,9 +4,9 @@
 
 This project documents the reverse engineering of a salvaged **JG-21264R** RC car PCB. The goal is to retain its existing motor-driving circuitry and replace the lost remote-control interface with an **ESP32-S3 N16R8** and smartphone controls.
 
-**Status: hardware investigation.** The original wiring map and owner-reported motor-output pairs are recorded. The owner has removed U3 and reports that the approximately 3.3 V rail remains present. The owner has flashed the opt-in 500 ms M1 test and observed motion in both directions with automatic stopping; powered startup stayed still. Full vehicle control, rated load, stop mode, reset behavior, other channels, PWM, and smartphone controls remain unverified or future work.
+**Status: hardware investigation.** The original wiring map and owner-reported motor-output pairs are recorded. The owner has removed U3 and reports that the approximately 3.3 V rail remains present. The owner has flashed the opt-in 500 ms M1 test and observed motion in both directions with automatic stopping; powered startup stayed still. On 2026-11-05 the owner reported M2 working after correcting a connection issue. Full vehicle control, rated load, stop mode, reset behavior, M3/M4, PWM, and smartphone controls remain unverified or future work.
 
-## Current checkpoint — 2026-11-02
+## Current checkpoint — 2026-11-05
 
 | Completed work | Recorded result |
 | --- | --- |
@@ -20,10 +20,11 @@ This project documents the reverse engineering of a salvaged **JG-21264R** RC ca
 | M1 socket | Owner identifies the top-left socket in the connector-side photo |
 | Short-pulse firmware | 500 ms mode built/host-tested locally, then flashed by owner with banner confirmed |
 | First M1 motor experiment | Stayed still before arming; commands `1` and `2` moved it in opposite directions and it stopped after each pulse |
+| M2 follow-up | Owner reports working after a connection repair; direct wire to U1-6 and approximately 1 kΩ series-path measurement confirmed |
 
 Physical results are owner-reported. The [bench record](docs/bench-record.md) preserves probe setups, individual readings, the resistor diagram, and measurement limits.
 
-**Next step:** build the [permanent signal interface](docs/interface-board.md) using eight separate U3 signal pads plus B−, with the resistor network on a separate board. The car is disassembled, so wheel/side mapping can wait. Pending M2 temporary rewiring was not reported complete and is superseded by this cleanup plan. M1 remains the last functionally tested channel; all power stays disconnected during construction.
+**Next step:** finish and check the [permanent signal interface](docs/interface-board.md), then test M3/M4 individually. M2 is the latest owner-reported working channel after a connection repair; its A signal wire is soldered directly to U1-6, the mapped equivalent of U3 pad 12. The separate eight-lane board and full harness are not confirmed complete. The car is disassembled, so wheel/side mapping can wait. Keep all power disconnected during wiring changes.
 
 ![Current reported pin map, arranged like the component-side photo](assets/diagrams/pin-map.svg)
 
@@ -57,7 +58,7 @@ Bluetooth LE is an optional future interface. The ESP32-S3 supports Bluetooth LE
 
 ![Proposed architecture with unresolved hardware boundaries](assets/diagrams/architecture.svg)
 
-U3 is now removed according to the owner. References to U3 in the original wiring map identify its remaining PCB footprint pads. The final design still needs a verified truth table, input compatibility, appropriate power/reference wiring, and startup behavior. GPIO4/5 drive the tested M1 bench interface; the remaining six GPIOs and full vehicle configuration are unassigned.
+U3 is now removed according to the owner. References to U3 in the original wiring map identify its remaining PCB footprint pads. The final design still needs a verified truth table, input compatibility, appropriate power/reference wiring, and startup behavior. GPIO4/5 are the reusable single-channel bench pair: tested first on M1, then instructed for M2. The owner reports M2 working and confirms the direct U1-6 connection; the final full-vehicle GPIO assignment remains open. The current firmware does not control M1 and M2 independently at the same time.
 
 ## Board photographs
 
