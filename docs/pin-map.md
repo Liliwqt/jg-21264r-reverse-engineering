@@ -46,6 +46,9 @@ U1 is upper left, U2 upper right, and the U3 footprint is below U1. **U3 is remo
 | 📡 | ANT | U3-16 | ANT | Reported antenna connection |
 | ⏚ | NEG | U1-10, U1-11, U1-14, U1-15, U2-10, U2-11, U2-14, U2-15, U3-1, U3-15 | battery negative | Reported negative-terminal beeps; ground/direct copper unverified |
 
+**Motor-control interface reverse engineered and bench-tested:** all eight input paths and four output pairs are mapped, with owner-reported working tests for every channel. See the [completed milestone](completed-motor-map.md) for channel-specific evidence and the permanent-board handoff.
+
+
 ## Reported motor-output pairs
 
 M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. Socket positions below are owner reports where supplied; remaining positions, chassis side, and rotation direction are unassigned. A/B are neutral terminal labels, not fixed positive/negative polarity.
@@ -56,7 +59,7 @@ M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the correspondi
 | --- | --- | --- | --- | --- | --- | --- |
 | 🟢 | M1 | U1 | 16 | 13 | top-left socket | M16 |
 | 🟡 | M2 | U1 | 12 | 9 | Not mapped | M17 |
-| 🟠 | M3 | U2 | 16 | 13 | Not mapped | M18 |
+| 🟠 | M3 | U2 | 16 | 13 | third motor socket | M18 |
 | 🟣 | M4 | U2 | 12 | 9 | Not mapped | M19 |
 
 ## Crystal marking and physical lead reference

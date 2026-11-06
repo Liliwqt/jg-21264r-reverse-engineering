@@ -1,10 +1,12 @@
 # System architecture
 
-**Architecture status:** proposed integration, dated 2026-11-05. This is a design boundary document, not a wiring schematic or a completed circuit.
+**Architecture status:** proposed integration, dated 2026-11-07. This is a design boundary document, not a wiring schematic or a completed circuit.
+
+The [motor-control reverse-engineering milestone](completed-motor-map.md) is complete: all eight inputs and four output pairs are mapped and each channel has an owner-reported working bench test. The permanent interface and full vehicle architecture below are the next stage.
 
 ## Objective and scope
 
-Use the original JG-21264R board as the motor-power stage, with an ESP32-S3 providing local smartphone control. Preserve the existing board while determining whether its driver inputs can be accessed and safely controlled. The first deliverable is a measured interface specification; firmware follows that specification.
+Use the original JG-21264R board as the motor-power stage, with an ESP32-S3 providing local smartphone control. The motor-control access paths are now mapped and individually bench-tested by the owner. Preserve that interface while constructing the permanent board and developing independent four-channel firmware.
 
 ## Original wiring and current rework state
 
@@ -42,7 +44,7 @@ flowchart TB
     U2 ---|"Pins 12 / 9 · separate terminals"| M4
 ```
 
-Undirected lines summarize owner-reported connections; they do not imply signal direction or verified direct copper. Each motor edge labels two distinct output terminals, not a short between those pins. M3/M4 are project aliases for the U2 channels; physical socket order remains open. Group names correspond to the [canonical map](../hardware/data/pin-map.json).
+Undirected lines summarize owner-reported connections; they do not imply signal direction or verified direct copper. Each motor edge labels two distinct output terminals, not a short between those pins. M3/M4 are project aliases for the U2 channels; M1 is owner-identified at the first/top-left socket and M3 at the third; remaining numeric socket positions are open. Group names correspond to the [canonical map](../hardware/data/pin-map.json).
 
 ## Target control path
 
@@ -76,7 +78,7 @@ All blocks in the target path are planned. Dashed links cross hardware boundarie
 | Interface → existing driver stage | Deliver valid signals with one electrical driver per control input | U3 removal reported; verify pad integrity, input compatibility, and biasing |
 | Supply → board and ESP32 | Provide appropriate motor and regulated logic power | Fitted board voltage, motor load, dev-board power input, and reference ground verified |
 
-“Stop” must be verified per channel. For M1, the owner observed motion in both directions and stopping after each pulse returned the requested inputs LOW. M2 was later reported working after a connection repair, without separate final per-command stop observations. Coast versus brake, reset behavior, and M3/M4 remain unverified. The first channel has observations for the two single-HIGH commands and both-LOW; both-HIGH remains untested and is not commanded by the bench program. No dead-time, PWM frequency, or current rating has been selected. GPIO4/5 are reused for one channel at a time, first M1 then the instructed M2 pair; the final full-vehicle GPIO map remains open.
+“Stop” must be verified per channel. For M1, the owner observed motion in both directions and stopping after each pulse returned the requested inputs LOW. M2 was later reported working after a connection repair, without separate final per-command stop observations. M2 and M3 were subsequently explicitly reported working on both commands, and M4 was reported working. Coast versus brake, reset behavior, and detailed per-channel stop characterization remain unverified. The first channel has observations for the two single-HIGH commands and both-LOW; both-HIGH remains untested and is not commanded by the bench program. No dead-time, PWM frequency, or current rating has been selected. GPIO4/5 are reused for one channel at a time, sequentially across the M1–M4 test procedures; the final full-vehicle GPIO map remains open.
 
 ## Power architecture
 
@@ -103,13 +105,13 @@ U3 removal is owner-reported and recorded in the bench log. The owner has rechec
 
 The owner assembled two 1 kΩ series resistors and two 10 kΩ pulldowns at empty U3 pads 14/13. The proposed signal assignments are GPIO4→1 kΩ→pad 14 (U1-2) and GPIO5→1 kΩ→pad 13 (U1-3), with each 10 kΩ pulldown on the driver-side node to B− and ESP32 GND proposed to B−. The owner confirmed the three ESP32 wires connected and the no-motor-load input experiment measured approximately 2.94 V command pulses returning to 0 V, with 3.3 V at U1-1. For the first U1-16/13 output pair, the owner then reported +3.89 V on command `1`, −3.89 V on `2`, and 0 V on `0` with no motors attached. The [bench record](bench-record.md) contains the assembly diagram and matched passive measurements.
 
-This is a provisional experiment, not a validated motor-control interface. USB, battery, and motors stay disconnected during assembly. The separately guided first-pair input experiment reused the flashed GPIO waveform with USB applied first, then the single RC cell; measured input behavior is in the bench record. The first output pair changes polarity electrically; reset transients, loaded behavior, and coast-versus-brake behavior still need verification. The owner subsequently attached one original M1 motor and reported opposite-direction jogs and stopping after both pulses; M2 was later reported working after a connection repair. Rated load and M3/M4 remain untested. The planned power architecture above is a future design; standalone tests used USB for the ESP32 and separate single-cell RC-board measurements.
+This is a provisional experiment, not a validated motor-control interface. USB, battery, and motors stay disconnected during assembly. The separately guided first-pair input experiment reused the flashed GPIO waveform with USB applied first, then the single RC cell; measured input behavior is in the bench record. The first output pair changes polarity electrically; reset transients, loaded behavior, and coast-versus-brake behavior still need verification. The owner subsequently attached one original M1 motor and reported opposite-direction jogs and stopping after both pulses; M2 was later reported working after a connection repair. M3 and M4 were subsequently reported working in individual tests. Rated load and simultaneous operation remain untested. The planned power architecture above is a future design; standalone tests used USB for the ESP32 and separate single-cell RC-board measurements.
 
 ## Permanent interface-board plan
 
 The owner now prefers a separate wired board to clean up the temporary connections. The [interface-board plan](interface-board.md) uses only U3 pads 14/13, 12/11, 10/9, and 6/7 as eight distinct signal wires, plus ground from B−. Each lane has 1 kΩ in series from an ESP32 GPIO and 10 kΩ from the driver-side node to ground. Supply/crystal/antenna/LED-related U3 pads are not connected by this motor-only interface.
 
-The full arrangement needs eight resistors of each value and two labeled nine-position harness connections. Existing four resistors can populate M1 first while the remaining lanes stay open. Other ESP32 GPIOs are unassigned, M2 was reported working after a connection repair, M3/M4 function testing remains pending, and the current firmware still operates only GPIO4/5. This is a construction plan, not a fabricated or fully tested board. The disassembled chassis does not yet supply wheel/side mapping.
+The full arrangement needs eight resistors of each value and two labeled nine-position harness connections. Existing four resistors can populate M1 first while the remaining lanes stay open. All four channels now have individual working reports. The owner will manually choose eight final GPIOs to suit routing and have them checked against the exact development board. The current firmware still operates only GPIO4/5. This is a construction plan, not a fabricated or fully tested board. The disassembled chassis does not yet supply wheel/side mapping.
 
 ## Planned firmware structure
 
@@ -121,18 +123,18 @@ board/           JG-21264R input truth table and hardware configuration
 platform/        GPIO, PWM, timers, and board startup handling
 ```
 
-These are module boundaries for a future implementation; the standalone bench program does not implement the future motion-control stack. ESP-IDF is selected. The project under `firmware/gpio_bench` provides the previously measured ten-second meter mode plus an opt-in manually armed 500 ms M1 test. The latter is locally built/host-tested, flashed by the owner, and has produced bidirectional M1 motion with automatic stopping in the owner-reported first experiment. The same GPIO4/5 bench pair was later instructed for M2, which the owner reported working after a connection repair; no additional GPIOs or firmware changes were made. Its pure-C state machine is separate from GPIO/RTOS handling; console logging cannot block the output task in motor mode. Full vehicle-control firmware remains unimplemented. A future board configuration must reject incomplete pin assignments and must not ship with guessed defaults.
+These are module boundaries for a future implementation; the standalone bench program does not implement the future motion-control stack. ESP-IDF is selected. The project under `firmware/gpio_bench` provides the previously measured ten-second meter mode plus an opt-in manually armed 500 ms M1 test. The latter is locally built/host-tested, flashed by the owner, and has produced bidirectional M1 motion with automatic stopping in the owner-reported first experiment. The same GPIO4/5 bench pair was later instructed for M2, which the owner reported working after a connection repair; no additional GPIOs or firmware changes were made. M2 and M3 were later explicitly reported working on both commands, and M4 was reported working after the corresponding retarget instructions. The final eight GPIOs are to be selected by the owner; independent four-channel firmware remains pending. Its pure-C state machine is separate from GPIO/RTOS handling; console logging cannot block the output task in motor mode. Full vehicle-control firmware remains unimplemented. A future board configuration must reject incomplete pin assignments and must not ship with guessed defaults.
 
 ## Decisions and open questions
 
 | Topic | Current decision / open question |
 | --- | --- |
-| Reuse | Prefer retaining the original power stage; feasibility is still being investigated |
+| Reuse | Retain the original power stage; individual reuse demonstrated by owner reports, integrated load behavior still to test |
 | Wireless | Local Wi-Fi browser control first; Bluetooth LE optional later |
 | Driver identity | No verified 1818BM manufacturer pinout obtained |
 | Controller identity | XC24558 versus XC2455B marking unresolved |
 | Supply | Owner reports a 3.88 V single cell and approximately 3.3 V logic rail; full supply routing and behavior under load remain unverified |
-| Motor allocation | Four output pairs recorded; M1 top-left socket and first bidirectional jog/stop observed by owner. M2 reported working after connection repair; other socket positions, M3/M4 function, chassis sides, and turning method remain open |
+| Motor allocation | Four output pairs recorded; M1 top-left socket and first bidirectional jog/stop observed by owner. M2 reported working after connection repair; other socket positions, chassis sides, and turning method remain open; all four channels have working bench reports, with M3 at socket three |
 | PWM | Required capability to test; no supported range assumed |
 | GPIO interface | Eight control paths and first-pair passive network rechecked by owner; ESP32 wiring and approximately 2.94 V input pulses owner-confirmed; first output pair measured +3.89/−3.89/0 V; reset behavior, threshold limits, loaded behavior, and stop mode remain unverified |
 | Validation | Unpowered tracing first, then bounded power/logic checks, then unloaded motor tests |

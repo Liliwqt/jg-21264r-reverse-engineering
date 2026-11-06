@@ -111,6 +111,7 @@ def ascii_layout(membership, colored, u3_removed=False):
 
 
 def markdown(data, membership):
+    complete = data.get("board_state", {}).get("motor_control_reverse_engineering", {}).get("status") == "complete"
     lines = [
         "# Current reported pin map", "",
         "Generated from [pin-map.json](../hardware/data/pin-map.json). Update that file and run `python3 tools/render_pin_map.py`; do not edit this generated document by hand.", "",
@@ -126,6 +127,8 @@ def markdown(data, membership):
     ]
     for group in data["groups"]:
         lines.append(f"| {group['symbol']} | {group['id']} | {', '.join(group['members'])} | {', '.join(group['external']) or '—'} | {group['function']} |")
+    if complete:
+        lines.extend(["", "**Motor-control interface reverse engineered and bench-tested:** all eight input paths and four output pairs are mapped, with owner-reported working tests for every channel. See the [completed milestone](completed-motor-map.md) for channel-specific evidence and the permanent-board handoff.", ""])
     lines.extend([
         "", "## Reported motor-output pairs", "",
         "M1/M2 follow the owner's U1 names; M3/M4 are project aliases for the corresponding U2 channels. Socket positions below are owner reports where supplied; remaining positions, chassis side, and rotation direction are unassigned. A/B are neutral terminal labels, not fixed positive/negative polarity.", "",
@@ -162,14 +165,16 @@ def markdown(data, membership):
 
 
 def svg(data, membership):
+    complete = data.get("board_state", {}).get("motor_control_reverse_engineering", {}).get("status") == "complete"
+    subtitle = "Motor-control interface reverse engineered · All four channels bench-reported working" if complete else "Owner-reported continuity · Working pin numbering · Electrical functions unverified"
     out = [
         '<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1080" viewBox="0 0 1280 1080" role="img" aria-labelledby="title desc">',
         '<title id="title">JG-21264R owner-reported continuity map</title>',
-        '<desc id="desc">U1 upper left, U2 upper right, removed U3 footprint lower left. Group IDs mark reported continuity. Numbered A/B labels mark separate motor-output terminals; matching motor colors identify a channel, not a shared net. Physical pin numbering and electrical functions are unverified.</desc>',
+        '<desc id="desc">U1 upper left, U2 upper right, removed U3 footprint lower left. Group IDs mark reported continuity. Numbered A/B labels mark separate motor-output terminals; matching motor colors identify a channel, not a shared net. Motor-control working reports are documented separately; manufacturer pin numbering and electrical ratings remain unverified.</desc>',
         '<rect width="1280" height="1080" rx="20" fill="#0b1220"/>',
         '<g font-family="Arial, Helvetica, sans-serif">',
         '<text x="48" y="57" fill="#f8fafc" font-size="30" font-weight="700">JG-21264R · Current pin map</text>',
-        '<text x="48" y="88" fill="#94a3b8" font-size="16">Owner-reported continuity · Working pin numbering · Electrical functions unverified</text>',
+        f'<text x="48" y="88" fill="#94a3b8" font-size="16">{html.escape(subtitle)}</text>',
     ]
     positions = {"U1": (70, 240), "U2": (710, 240), "U3": (70, 580)}
     for chip in data["chips"]:
@@ -224,7 +229,7 @@ def svg(data, membership):
         '<text x="70" y="947" fill="#94a3b8" font-size="14">Gray dot = unrecorded. Socket labels are owner reports; other positions unmapped.</text>',
         '<path d="M48 975H1232" stroke="#334155"/>',
         '<text x="48" y="1003" fill="#cbd5e1" font-size="14">Original-board group references retained. U3 is removed; its numbers identify footprint pads. Paired component terminals are separate.</text>',
-        '<text x="48" y="1029" fill="#fbbf24" font-size="14">Rail readings are owner-reported. Package numbering and driver pin functions remain unverified.</text>',
+        '<text x="48" y="1029" fill="#fbbf24" font-size="14">Rail readings and bench results are owner-reported. Manufacturer pinout and electrical ratings remain unverified.</text>',
         '<text x="48" y="1055" fill="#94a3b8" font-size="14">Source: hardware/data/pin-map.json · Photo arrangement preserved · No ESP32 GPIO assignments implied</text>',
         '</g></svg>',
     ])
@@ -244,6 +249,8 @@ def main():
     for motor in data.get("motors", []):
         if motor.get("socket_label"):
             plain += f"\n{motor['id']} socket: {motor['socket_label']} ({motor['socket_reference']})\n"
+    if data.get("board_state", {}).get("motor_control_reverse_engineering", {}).get("status") == "complete":
+        plain += "\nMotor-control interface reverse engineered: eight inputs and four output pairs mapped; all four channels bench-reported working.\nSee docs/completed-motor-map.md for evidence and next-stage scope.\n"
     plain.encode("ascii")
     files = {
         ROOT / "docs/pin-map.md": markdown(data, membership),

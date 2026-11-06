@@ -24,3 +24,8 @@ nearest the X1 PCB marking -> U3-3 (X1A)
 other lead -> U3-4 (X1B)
 
 M1 socket: top-left socket (First of four left motor sockets; connector-side photo with JG-21264R text upright.)
+
+M3 socket: third motor socket (Third of four left motor sockets from the top; connector-side JG-21264R text upright.)
+
+Motor-control interface reverse engineered: eight inputs and four output pairs mapped; all four channels bench-reported working.
+See docs/completed-motor-map.md for evidence and next-stage scope.

@@ -263,3 +263,24 @@ The owner reported M2 wiring ready. The instructed single-channel bench setup re
 The USB-only and powered startup checks were proposed, but the owner advanced with “next” without individual readings. U1-6-to-B− was subsequently requested with approximately 10 kΩ expected; no numeric result was supplied before the owner reported the connection issue resolved. Do not copy M1's measured voltages, differential polarity, startup behavior, per-command stopping observations, or measured resistor quantities into M2's record. M2's final report is a general working result after repair, not a separate measured timing/load/stop-mode characterization.
 
 The owner requested recording and pushing this checkpoint. M3/M4, the full permanent interface-board/harness assembly, final multi-channel GPIO assignments, and chassis/socket mapping remain open. Current power state and simultaneous M1/M2 wiring were not specified. No firmware change or new flash was reported for this follow-up.
+
+
+## Motor-control mapping complete — owner reports, 2026-11-07
+
+### M2 retest and corrected failing command
+
+The owner requested diagnosis again, initially describing command `2` as failing and confirming the proposed `PULSE 2` monitor message. In the instructed unpowered resistance check, GPIO5 to U1-7 read approximately **1 kΩ**. The owner then explicitly corrected the symptom: command **`1`** did not work, while `2` did. GPIO4 header to U1-6 subsequently read **8.90 kΩ**, rather than the approximately 1 kΩ expected for that series path. A direct resistor-lead check was requested, but no value or repair detail was supplied; the owner instead reported **both commands now working**. Preserve both dated resistance readings; neither establishes the exact failed joint or a final stable path resistance. No firmware change or new flash was reported.
+
+### M3 socket and functional test
+
+With battery/USB/motors instructed disconnected, the socket check was U2-16 to one contact and U2-13 to the other contact of the same socket. The owner answered **3**, identifying the third motor socket from the top with the connector-side JG-21264R print upright. The next wiring instruction reused GPIO4 through 1 kΩ to U2-2 and GPIO5 through 1 kΩ to U2-3, each with a driver-side 10 kΩ pulldown to B− and shared ESP32 ground. The owner explicitly reported **working on both `1` and `2`**. Separate voltage, pulse duration, current, startup, and stopping readings were not supplied.
+
+### M4 functional test
+
+The proposed socket check used U2-12 and U2-9 as separate output contacts. The owner replied yes, acknowledging the check, without giving a numeric socket position. The instructed wiring then moved the test pair to GPIO4→1 kΩ→U2-6 and GPIO5→1 kΩ→U2-7, with the same driver-side pulldown arrangement. The owner reported **M4 works now**. This is a working-channel report; separate final per-command stopping, timing, startup, or voltage results were not supplied. Do not infer a fourth-socket number from the motor alias alone.
+
+### Completed milestone and construction handoff
+
+Motor-control reverse engineering is complete for the project's reuse scope: eight control inputs and four output pairs are mapped, U3 is removed, and M1–M4 each have an owner-reported individual working test. The [completed map](completed-motor-map.md) is the construction reference. These are physical owner reports, not simulated hardware or independent agent measurements; no simultaneous four-channel run is claimed.
+
+The owner will manually choose eight GPIOs for neat routing before building the separate resistor interface. Final GPIOs, the exact development-board pin availability, and completed interface-board fabrication are not supplied. Plan remains eight 1 kΩ series resistors, eight driver-side 10 kΩ pulldowns, and common B−/ESP32 ground. The current firmware drives only GPIO4/5; independent four-channel firmware, integrated checks, rated load, reset/stop mode, PWM, and phone control are next-stage work. The owner explicitly requested pushing this completed motor-control mapping checkpoint.

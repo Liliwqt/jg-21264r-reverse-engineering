@@ -4,9 +4,11 @@
 
 This project documents the reverse engineering of a salvaged **JG-21264R** RC car PCB. The goal is to retain its existing motor-driving circuitry and replace the lost remote-control interface with an **ESP32-S3 N16R8** and smartphone controls.
 
-**Status: hardware investigation.** The original wiring map and owner-reported motor-output pairs are recorded. The owner has removed U3 and reports that the approximately 3.3 V rail remains present. The owner has flashed the opt-in 500 ms M1 test and observed motion in both directions with automatic stopping; powered startup stayed still. On 2026-11-05 the owner reported M2 working after correcting a connection issue. Full vehicle control, rated load, stop mode, reset behavior, M3/M4, PWM, and smartphone controls remain unverified or future work.
+**Status: motor-control reverse engineering complete.** The JG-21264R's eight control-input paths and four motor-output pairs are mapped, U3 has been removed, and the owner reports all four channels working in individual ESP32 bench tests. The completed milestone covers access to the original motor-control circuitry; the permanent interface board, final GPIO assignments, independent four-channel firmware, simultaneous operation, PWM, and smartphone control are the next stage.
 
-## Current checkpoint — 2026-11-05
+See the [completed motor-control map](docs/completed-motor-map.md) for the wiring table and the exact evidence for each channel. Original radio, LED/speaker functions, a manufacturer-level IC pinout, driver ratings, reset behavior, and coast-versus-brake behavior are outside this completed milestone.
+
+## Current checkpoint — 2026-11-07
 
 | Completed work | Recorded result |
 | --- | --- |
@@ -20,11 +22,14 @@ This project documents the reverse engineering of a salvaged **JG-21264R** RC ca
 | M1 socket | Owner identifies the top-left socket in the connector-side photo |
 | Short-pulse firmware | 500 ms mode built/host-tested locally, then flashed by owner with banner confirmed |
 | First M1 motor experiment | Stayed still before arming; commands `1` and `2` moved it in opposite directions and it stopped after each pulse |
-| M2 follow-up | Owner reports working after a connection repair; direct wire to U1-6 and approximately 1 kΩ series-path measurement confirmed |
+| M2 follow-up | Both commands now reported working; prior connection issue and later 8.90 kΩ A-path reading retained in bench history |
+| M3 | Third motor socket identified; commands `1` and `2` reported working |
+| M4 | Owner reports working; no separate final per-command/timing readings supplied |
+| Motor-control reverse engineering | Completed map of eight control inputs and four output pairs, with individual working reports for M1–M4 |
 
 Physical results are owner-reported. The [bench record](docs/bench-record.md) preserves probe setups, individual readings, the resistor diagram, and measurement limits.
 
-**Next step:** finish and check the [permanent signal interface](docs/interface-board.md), then test M3/M4 individually. M2 is the latest owner-reported working channel after a connection repair; its A signal wire is soldered directly to U1-6, the mapped equivalent of U3 pad 12. The separate eight-lane board and full harness are not confirmed complete. The car is disassembled, so wheel/side mapping can wait. Keep all power disconnected during wiring changes.
+**Next step:** build the [permanent signal interface](docs/interface-board.md). The owner will choose eight ESP32 GPIOs to suit physical wire routing; the proposed GPIOs and exact development-board model must be checked before soldering the ESP32 side. Each signal uses 1 kΩ in series and 10 kΩ to B− on the driver side: eight of each resistor, plus shared ground. Then update the firmware for the final assignments and test the assembled system. Keep power disconnected during construction. No completed new interface board is claimed.
 
 ![Current reported pin map, arranged like the component-side photo](assets/diagrams/pin-map.svg)
 
@@ -33,6 +38,7 @@ Physical results are owner-reported. The [bench record](docs/bench-record.md) pr
 | Document | Purpose |
 | --- | --- |
 | [Board identification and photos](docs/hardware.md) | Components, connectors, and remaining uncertainties |
+| [Completed motor-control map](docs/completed-motor-map.md) | Completed reverse-engineering milestone, driver/U3 signal table, channel reports, and next-stage scope |
 | [Current pin map](docs/pin-map.md) | Colored monospace layout, ASCII fallback, and continuity groups |
 | [Measurement history](docs/measurement-log.md) | Owner observations and corrected pin references |
 | [Bench record](docs/bench-record.md) | Regulator tracing, idle voltages, U3 removal, and post-removal checks |
@@ -58,7 +64,7 @@ Bluetooth LE is an optional future interface. The ESP32-S3 supports Bluetooth LE
 
 ![Proposed architecture with unresolved hardware boundaries](assets/diagrams/architecture.svg)
 
-U3 is now removed according to the owner. References to U3 in the original wiring map identify its remaining PCB footprint pads. The final design still needs a verified truth table, input compatibility, appropriate power/reference wiring, and startup behavior. GPIO4/5 are the reusable single-channel bench pair: tested first on M1, then instructed for M2. The owner reports M2 working and confirms the direct U1-6 connection; the final full-vehicle GPIO assignment remains open. The current firmware does not control M1 and M2 independently at the same time.
+U3 is now removed according to the owner. References to U3 in the original wiring map identify its remaining PCB footprint pads. The final design still needs a verified truth table, input compatibility, appropriate power/reference wiring, and startup behavior. GPIO4/5 are the reusable single-channel bench pair used in the sequential M1–M4 procedures. The owner reports every channel working, with a direct U1-6 attachment confirmed for M2. The final eight GPIOs will be selected by the owner; the current program still operates only GPIO4/5 and does not provide independent four-channel control.
 
 ## Board photographs
 
@@ -80,7 +86,7 @@ Original files are preserved without alteration. “Component side” refers to 
 ├── docs/                     # Hardware evidence, architecture, and verification
 ├── firmware/                 # ESP-IDF standalone bench test; motor integration pending
 ├── hardware/
-│   └── data/pin-map.json      # Canonical reported connectivity
+│   └── data/pin-map.json      # Canonical map and owner-reported bench milestones
 └── tools/render_pin_map.py    # Standard-library diagram/document generator
 ```
 

@@ -28,7 +28,7 @@ Recorded into this repository on **2026-11-01** from the owner's conversation. I
 | M20 | Silver oval crystal case reads 16.000; PCB marking is X1 | X1; nominal 16 MHz interpretation |
 | M21 | Crystal lead nearest the X1 PCB marking connects to U3-3; other lead connects to U3-4 | X1A / X1B; separate leads, no polarity implied |
 
-Motor pairs describe two separate outputs across a motor, not direct continuity between those outputs. M3/M4 are project aliases; physical socket order, chassis positions, and polarity are not established.
+Motor pairs describe two separate outputs across a motor, not direct continuity between those outputs. M3/M4 are project aliases. Later socket identifications are M1 first/top-left and M3 third; remaining numeric socket positions, chassis positions, and fixed rotation polarity are not established.
 
 The owner also reported that some pin pairs appeared to beep while a capacitor charged. No specific pairs were identified. Preserve all current groups as **reported**, and do not promote any to verified direct copper until the stable-resistance check is recorded.
 
@@ -54,3 +54,8 @@ Record one pair at a time, with power disconnected for resistance or continuity 
 | YYYY-MM-DD | Ux-pin / labeled terminal | Ux-pin / terminal | Ω / continuity | Value or OL | Value or OL | Value or OL | Direct candidate / transient / component path / unresolved |
 
 A persistent value near the probes-touching baseline in both directions supports a direct connection. A rising value or temporary beep may be capacitive; asymmetric readings may involve a semiconductor. In-circuit readings still need interpretation.
+
+
+## Motor-control mapping milestone — 2026-11-07
+
+All eight input paths and four output pairs now have individual working-channel reports. M2 was explicitly reported working on both commands after a corrected failing-command diagnosis and an 8.90 kΩ A-path observation. M3 was identified as the third motor socket in response to the U2-16/13 continuity check and then reported working on `1` and `2`. M4's U2-12/9 socket check was acknowledged and operation reported working; its numeric socket position was not supplied. Original map records and numbering corrections remain unchanged. See the [bench record](bench-record.md) for exact setups and reporting limits and the [completed motor-control map](completed-motor-map.md) for the construction handoff.

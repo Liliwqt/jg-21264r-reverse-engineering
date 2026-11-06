@@ -5,12 +5,12 @@
   "numbering": "Owner working convention; physical pin-1 orientation not independently verified. Upper edge 16..9; lower edge 1..8.",
   "board_state": {
     "u3_removed": true,
-    "reported_date": "2026-11-05",
+    "reported_date": "2026-11-07",
     "evidence": "Owner reports complete removal and a clear pad inspection; no post-removal photo inspected by the agent.",
     "map_scope": "Connection groups and chip numbering preserve original board observations. U3 references now identify footprint pads, not an installed chip.",
     "post_removal_rail": "Owner confirms approximately 3.3 V at U1-1 relative to B-.",
     "esp32_connected": null,
-    "esp32_connection_status": "Latest bench setup instructed GPIO4/5 through the resistor pair to M2: U1-6/U3 pad 12 and U1-7/U3 pad 11 with shared B-. Owner confirms a direct wire to U1-6, approximately 1 kOhm series-path resistance, and working M2 operation after a connection repair. Current power state, exact B-wire attachment, and simultaneous M1/M2 wiring were not specified.",
+    "esp32_connection_status": "Latest guided bench sequence reused GPIO4/5 one channel at a time through 1 kOhm series/10 kOhm pulldown lanes for M1-M4. Owner reports all four working. M2 direct U1-6 A-wire confirmed. Current power/harness state and full permanent interface completion not specified; final eight GPIOs will be chosen by owner.",
     "first_pair_passive_interface": "Owner reports two 1 kOhm series resistors and two 10 kOhm pulldowns at U3 pads 14/13 assembled and expected 10/11/20 kOhm checks matched; see docs/bench-record.md.",
     "first_pair_input_test": "Owner reports 3.3 V at U1-1 with both boards powered, both input pads idle near 0 V, pad 14 at 2.94 V on command 1 returning to 0 V, and pad 13 reported same on command 2. First output-pair measurements are recorded separately.",
     "first_pair_output_test": {
@@ -43,7 +43,7 @@
       "stop_mode": "Coast versus active brake unresolved."
     },
     "assembly_plan": {
-      "status": "Separate interface-board plan retained. Owner reports M2 wiring ready and operation working after a connection repair on 2026-11-05; full eight-lane board and harness completion not confirmed.",
+      "status": "Motor-control mapping and individual tests complete. Owner will build a separate interface board and manually select GPIOs for convenient solder routing; construction completion not reported.",
       "u3_signal_pads": [
         14,
         13,
@@ -67,8 +67,8 @@
         "series": 2,
         "pulldown": 2
       },
-      "esp32_gpio_assignment": "GPIO4/5 reused for single-channel bench testing: M1 first, then instructed M2. Six additional GPIOs for independent four-channel operation remain unassigned.",
-      "functional_scope": "M1 bidirectional motion/stopping observed by owner; M2 reported working after connection repair; M3/M4 function tests pending.",
+      "esp32_gpio_assignment": "Final eight GPIOs to be manually selected by owner and checked against exact development board. GPIO4/5 remain the reusable sequential bench pair, not final four-channel assignments.",
+      "functional_scope": "All four channels have owner-reported working individual tests; M1 has detailed direction/stop evidence, M2/M3 explicitly work on both commands, M4 has a general working report.",
       "reference": "docs/interface-board.md",
       "unused_u3_pads": [
         1,
@@ -81,7 +81,7 @@
         16
       ],
       "unused_pad_policy": "Keep pads separate and available; not connected by motor-only interface, not declared unusable. Future LED investigation may use pad 8 after verification.",
-      "construction_confirmation": "M2 wiring ready and direct U1-6 attachment owner-confirmed; full permanent breakout/new board completion not confirmed.",
+      "construction_confirmation": "Owner plans to proceed with a separate interface board; no completed new board or full permanent harness claimed.",
       "existing_resistor_quantities_evidence": "Two of each recorded on 2026-11-02; later M2 wiring does not establish whether parts were reused or the inventory increased."
     },
     "second_motor_test": {
@@ -111,7 +111,78 @@
       "status": "Owner-reported working after connection repair.",
       "evidence": "Physical owner reports in chat; not independently measured or mocked. No separate M2 startup readings, numeric pulldown reading, final per-command stop observations, pulse duration, or load measurements supplied.",
       "firmware_change": false,
-      "reference": "docs/bench-record.md"
+      "reference": "docs/bench-record.md",
+      "follow_up_2026_11_07": {
+        "symptom_correction": "Owner initially named command 2, then explicitly corrected the failing command to 1; command 2 worked.",
+        "command_2_gpio5_to_u1_7_ohms_reported": 1000,
+        "command_1_gpio4_to_u1_6_ohms_reported": 8900,
+        "result": "Owner subsequently explicitly reports both commands work.",
+        "repair_details": "Not supplied; no final repeat resistance or direct resistor-lead result supplied.",
+        "stop_observations": "No separate final stopping/timing observations supplied."
+      }
+    },
+    "third_motor_test": {
+      "motor": "M3",
+      "reported_date": "2026-11-07",
+      "inputs": [
+        "U2-2",
+        "U2-3"
+      ],
+      "original_u3_pads": [
+        10,
+        9
+      ],
+      "outputs": [
+        "U2-16",
+        "U2-13"
+      ],
+      "socket_number_reported": 3,
+      "status": "Owner explicitly reports working on commands 1 and 2.",
+      "evidence": "Owner-reported physical result after instructed GPIO4/5 retarget; no separate voltage, timing, current, or stopping readings supplied."
+    },
+    "fourth_motor_test": {
+      "motor": "M4",
+      "reported_date": "2026-11-07",
+      "inputs": [
+        "U2-6",
+        "U2-7"
+      ],
+      "original_u3_pads": [
+        6,
+        7
+      ],
+      "outputs": [
+        "U2-12",
+        "U2-9"
+      ],
+      "socket_number_reported": null,
+      "socket_evidence": "Owner acknowledged the U2-12/9 socket check with yes; no numeric socket position supplied.",
+      "status": "Owner reports M4 works now.",
+      "evidence": "Owner-reported physical result after instructed GPIO4/5 retarget; separate final per-command, startup, stopping, timing, and current readings not supplied."
+    },
+    "motor_control_reverse_engineering": {
+      "status": "complete",
+      "completed_date": "2026-11-07",
+      "scope": "Eight control-input paths and four motor-output pairs mapped; U3 removed; all four channels have owner-reported individual working bench tests.",
+      "evidence": "Owner continuity and physical bench reports, not independently reproduced by agent.",
+      "working_channels": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "reference": "docs/completed-motor-map.md",
+      "next_stage": "Owner selects eight GPIOs to suit routing; check exact board and assignments, construct permanent resistor interface, update firmware, then verify integrated operation.",
+      "outside_scope": [
+        "Full non-motor circuit reverse engineering",
+        "Manufacturer pinout and electrical ratings",
+        "Permanent interface-board fabrication",
+        "Independent four-channel firmware",
+        "Simultaneous motor operation and rated load",
+        "Reset/disconnect behavior and stop mode",
+        "PWM and smartphone control",
+        "Chassis/wheel assignment"
+      ]
     }
   },
   "chips": [
@@ -122,7 +193,7 @@
   "motors": [
     {"id": "M1", "chip": "U1", "pins": [16, 13], "symbol": "🟢", "color": "#84cc16", "record": "M16", "socket_label": "top-left socket", "socket_reference": "First of four left motor sockets; connector-side photo with JG-21264R text upright.", "socket_evidence": "Owner identification in response to socket-tracing prompt; no separate contact resistance values supplied."},
     {"id": "M2", "chip": "U1", "pins": [12, 9], "symbol": "🟡", "color": "#facc15", "record": "M17"},
-    {"id": "M3", "chip": "U2", "pins": [16, 13], "symbol": "🟠", "color": "#fb923c", "record": "M18"},
+    {"id": "M3", "chip": "U2", "pins": [16, 13], "symbol": "🟠", "color": "#fb923c", "record": "M18", "socket_label": "third motor socket", "socket_reference": "Third of four left motor sockets from the top; connector-side JG-21264R text upright.", "socket_evidence": "Owner answered 3 after the U2-16/13 continuity-to-socket check on 2026-11-07; separate contact resistance values not supplied."},
     {"id": "M4", "chip": "U2", "pins": [12, 9], "symbol": "🟣", "color": "#e879f9", "record": "M19"}
   ],
   "crystals": [

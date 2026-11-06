@@ -1,6 +1,6 @@
-# First M1 motor experiment
+# Individual motor-channel bench experiments
 
-**Current status: the owner flashed the 500 ms mode and confirmed that M1 moved in both directions and stopped after each pulse.** Powered startup stayed still. Exact pulse duration and current were not measured. The owner later reported M2 working after a connection repair on 2026-11-05. The procedure below retains the M1 pin references; M3/M4, rated load, reset behavior, PWM, and phone control remain unverified or unimplemented. See the latest [bench record](bench-record.md) for the physical reports.
+**Current status: the owner flashed the 500 ms mode and confirmed that M1 moved in both directions and stopped after each pulse.** Powered startup stayed still. Exact pulse duration and current were not measured. The owner later reported M2 working after a connection repair on 2026-11-05. As of 2026-11-07 all four channels have owner-reported working tests; M2/M3 explicitly work on both commands and M4 has a general working report. The procedure below retains the M1 pin references; the [completed map](completed-motor-map.md) gives each channel. Rated load, reset behavior, PWM, and phone control remain unverified or unimplemented. See the latest [bench record](bench-record.md) for the physical reports.
 
 ## Recorded prerequisites
 
@@ -53,6 +53,12 @@ For M2, the instructed bench pair is GPIO4→1 kΩ→U1-6 (originally U3 pad 12)
 
 The current program still drives only GPIO4/5. Change channel wiring only with battery and USB disconnected; do not wire M1 and M2 together to the same outputs. A firmware/menu label mentioning M1 does not implement additional channels.
 
+## M3/M4 follow-up and permanent-board handoff
+
+The owner identified M3 as socket three using U2-16/13, then reported commands `1` and `2` working with the instructed U2-2/3 input pair. The M4 U2-12/9 socket check was acknowledged without a number; after the U2-6/7 input wiring instruction, the owner reported M4 working. M2 also has a later explicit both-command working report. Detailed pulse/stop/current results were not supplied for these later tests.
+
+Basic individual channel testing is complete. Build the separate resistor interface with all power disconnected. The owner will choose all eight final GPIOs for physical routing; check them against the exact board and update firmware before independent four-channel operation. Current GPIO4/5 firmware is unchanged.
+
 ## Commands and limits
 
 | Input | Effect in motor-test mode |
@@ -63,7 +69,7 @@ The current program still drives only GPIO4/5. Change channel wiring only with b
 | No input | Pulse and arm deadlines still expire |
 | After a pulse | A two-second software cooldown at LOW, then a fresh `a` required |
 
-The output task checks time on a 20 ms queue wait and does not print or wait for console output. Logging is a separate lower-priority task with a nonblocking notice queue. Stop requests use a separate task notification so later arm/direction characters cannot overwrite a queued stop. These are software measures, not a hardware interlock or a physically verified maximum pulse time. The owner has observed the first M1 motion/stop experiment; these observations do not verify a physical maximum pulse time or rated-load operation. Reset transients, load current, driver ratings, M3/M4, PWM, Wi-Fi, and phone controls remain unverified or unimplemented.
+The output task checks time on a 20 ms queue wait and does not print or wait for console output. Logging is a separate lower-priority task with a nonblocking notice queue. Stop requests use a separate task notification so later arm/direction characters cannot overwrite a queued stop. These are software measures, not a hardware interlock or a physically verified maximum pulse time. The owner has observed the first M1 motion/stop experiment; these observations do not verify a physical maximum pulse time or rated-load operation. Reset transients, load current, driver ratings, simultaneous four-channel operation, PWM, Wi-Fi, and phone controls remain unverified or unimplemented.
 
 ## Local verification
 

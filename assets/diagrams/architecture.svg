@@ -8,7 +8,7 @@
   <rect width="1280" height="740" rx="20" fill="#f8fafc"/>
   <g font-family="Arial, Helvetica, sans-serif">
     <text x="48" y="58" fill="#0f172a" font-size="30" font-weight="700">JG-21264R × ESP32-S3</text>
-    <text x="48" y="90" fill="#475569" font-size="17">Proposed system architecture · M1 jogs observed; M2 reported working · M3/M4 and vehicle control pending</text>
+    <text x="48" y="90" fill="#475569" font-size="17">Motor-control map complete · All four channels bench-reported working · Permanent interface and vehicle control next</text>
     <rect x="48" y="120" width="1184" height="44" rx="8" fill="#fff7ed" stroke="#fed7aa"/>
     <text x="66" y="148" fill="#9a3412" font-size="16">Design boundary: verify driver levels, power sequencing, and behavior before energizing the interconnected setup.</text>
 
